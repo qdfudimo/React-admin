@@ -1,0 +1,151 @@
+// 默认样式 start
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+hr,
+p,
+blockquote,
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
+pre,
+form,
+fieldset,
+legend,
+button,
+input,
+textarea,
+th,
+td {
+    margin: 0;
+    padding: 0;
+}
+
+
+
+address,
+cite,
+dfn,
+em,
+var {
+    font-style: normal;
+}
+
+code,
+kbd,
+pre,
+samp {
+    font-family: couriernew, courier, monospace;
+}
+
+small {
+    font-size: 12px;
+}
+
+ul,
+ol {
+    list-style: none;
+}
+
+a {
+    color: #ccc;
+    font-size: 12px;
+}
+
+a:hover {
+    text-decoration: none;
+    color: #0d8abf;
+}
+
+sup {
+    vertical-align: text-top;
+}
+
+sub {
+    vertical-align: text-bottom;
+}
+
+legend {
+    color: #000;
+}
+
+fieldset,
+img {
+    border: 0;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+a,
+button {
+    cursor: pointer;
+}
+
+html,
+body,
+#root {
+    height: 100%;
+}
+
+html {
+    box-sizing: border-box;
+    font: 14px / 1.42857 "Microsoft YaHei", "微软雅黑", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+
+*,
+*:before,
+*:after {
+    box-sizing: inherit;
+}
+
+
+
+/* ------------ 公共样式 start ------------ */
+// 左浮动
+.fl {
+    float: left;
+}
+
+// 右浮动
+.fr {
+    float: right;
+}
+
+// 清除浮动
+.clearfix::after,
+.clearfix::before {
+    display: table;
+    content: "";
+}
+
+.clearfix::after {
+    clear: both;
+}
+
+
+input {
+    background: none;
+    outline: none;
+    border: none;
+    caret-color: red; //光标颜色
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield;
+}
