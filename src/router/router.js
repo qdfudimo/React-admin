@@ -1,7 +1,7 @@
 import React from 'react'
 import {
     HomeOutlined,
-    PieChartOutlined,
+    HighlightOutlined,
     BarsOutlined,
     MenuOutlined,
     QqOutlined,
@@ -11,9 +11,13 @@ import {
     AreaChartOutlined,
     UnderlineOutlined,
     AppstoreOutlined,
-    EditOutlined
+    EditOutlined,
+    AppstoreAddOutlined,
+    DragOutlined,
+    PlusSquareOutlined,
+    OrderedListOutlined
 } from '@ant-design/icons';
- const menuData = [
+const menuData = [
     {
         path: '/home',
         title: '首页',
@@ -32,14 +36,35 @@ import {
             {
                 path: '/components/editor',
                 title: '富文本',
+                cont: ['常用组件','富文本'],
                 icon: <EditOutlined />
             },
             {
-                path: '/products/goods',
-                title: '商品管理',
-                icon: <PieChartOutlined />
+                path: '/components/Markdown',
+                title: 'Markdown',
+                cont: ['常用组件','Markdown'],
+                icon: <HighlightOutlined />
             },
 
+        ]
+    },
+    {
+        path: '/drop',
+        title: '拖拽 移动',
+        icon: <AppstoreAddOutlined />,
+        children: [
+            {
+                path: '/drop/dialog',
+                title: '模态框拖拽',
+                cont: ['拖拽 移动','模态框拖拽'],
+                icon: <DragOutlined />
+            },
+            {
+                path: '/drop/table',
+                title: '表格拖拽',
+                cont: ['拖拽 移动','表格拖拽'],
+                icon: <PlusSquareOutlined />
+            }
         ]
     },
     {
@@ -51,6 +76,11 @@ import {
         path: '/role',
         title: '角色管理',
         icon: <AndroidOutlined />,
+    },
+    {
+        path: '/table',
+        title: '表格',
+        icon: <OrderedListOutlined />,
     },
     {
         path: '/charts',
@@ -70,11 +100,13 @@ import {
                     {
                         path: '/menu/level/submenu-1',
                         title: '三级菜单1',
+                        cont: ['多级菜单','二级菜单',"三级菜单1"],
                         icon: <WechatOutlined />
                     },
                     {
                         path: '/menu/level/submenu-2',
                         title: '三级菜单2',
+                        cont: ['多级菜单','二级菜单',"三级菜单2"],
                         icon: <QqOutlined />
                     }
                 ]
@@ -82,7 +114,7 @@ import {
         ]
     },
 ];
-export  {menuData}
+export { menuData }
 // import { BrowserRouter as Router, Route, Switch} from "react-router-dom";
 // import withLoadable from './loadable'
 // const Login = withLoadable(() => import("../view/login"))

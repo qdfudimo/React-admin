@@ -1,30 +1,20 @@
-import React, { Component } from 'react'
-import { withRouter } from "react-router-dom"
+import React from 'react'
+import { Route, withRouter, Redirect } from "react-router-dom"
 import { connect } from "react-redux"
-import { message } from 'antd';
-export default function (Componets) {
-    class AutherCreate extends Component {
-        UNSAFE_componentWillMount() {
-            if(!this.props.isLogin) {
-                message.warning('你还没有登录，淘气鬼，让我把你送回去吧！');
-                this.props.history.push("/login")
-            }
-        }
-        UNSAFE_componentWillUpdate(nextprops) {
-            if(!nextprops.isLogin) {
-                this.props.history.push("/")
-            }
-        }
-        render() {
-            return (
-                <Componets {...this.props}></Componets>
-            )
-        }
+// import { message } from 'antd';
+const AuthRouter = ({ Component, ...props }) => {
+    if (props.isLogin) {
+        return <Route {...props} componet={Component} />
+    } else {
+        // message.warning('你还没有登录，淘气鬼，让我把你送回去吧！');
+        return <Redirect to={{ pathname: "/login" }} />
     }
-    const mapStateToProps = function (state) {
-        return {
-            isLogin: state.isLogin
-        }
+};
+
+//   创建映射函数读取redux中保存用户登录状态
+const mapStateToProps = function (state) {
+    return {
+        isLogin: state.isLogin
     }
-    return withRouter(connect(mapStateToProps, null)(AutherCreate))
 }
+export default connect(mapStateToProps)(withRouter(AuthRouter))

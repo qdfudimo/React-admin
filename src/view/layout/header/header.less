@@ -1,0 +1,42 @@
+.ant-avatar.ant-avatar-image {
+    width: 40px;
+    height: 40px;
+    float: right;
+    top: 12px;
+    right: 12px;
+    overflow: visible;
+
+    img {
+        overflow: hidden;
+        border-radius: 50%;
+    }
+
+    &::before {
+        content: "";
+        display: block;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        width: 10px;
+        height: 10px;
+        border-width: 2px;
+        border-radius: 50%;
+        border-style: solid;
+        border-color: #fff;
+        background-color: #6cc788;
+        z-index: 4;
+    }
+}
+
+.ant-layout-header .trigger {
+    font-size: 18px;
+    line-height: 64px;
+    padding: 0 24px;
+    cursor: pointer;
+    color: #ccc;
+    transition: color 0.3s;
+}
+
+.ant-layout-header .trigger:hover {
+    color: #1890ff;
+}

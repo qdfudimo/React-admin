@@ -1,10 +1,13 @@
-import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
+import React, { Component} from 'react'
+import { Link, withRouter } from 'react-router-dom'
+import {splits} from "@/utils/index"
 import "./menu.less"
 import { menuData } from "@/router/router.js"
 import { Menu } from 'antd';
 const { SubMenu } = Menu;
-export default class Menus extends Component {
+
+class Menus extends Component {
+
     menuTag = function deep(menuData) {
         if (menuData && menuData.length > 0) {
             return menuData.map(item => {
@@ -14,17 +17,18 @@ export default class Menus extends Component {
                     </SubMenu>)
                 }
                 return (<Menu.Item key={item.path} icon={item.icon}>
-                    <Link to={item.path}>{item.title}</Link>
+                    <Link to={{ pathname: item.path, state: item.cont ? item.cont : item.title }}>{item.title}</Link>
                 </Menu.Item>)
             })
         }
     }
     render() {
+        let defaultSelectedKeys = this.props.location.pathname;
+        let defaultOpenKeys = splits(this.props.location.pathname);
         return (
             <Menu
-                id="menus"
-                // defaultSelectedKeys={['1']}
-                // defaultOpenKeys={['sub1']}
+                defaultSelectedKeys={[defaultSelectedKeys]}
+                defaultOpenKeys={defaultOpenKeys}
                 mode="inline"
                 theme="dark"
             >
@@ -33,3 +37,4 @@ export default class Menus extends Component {
         )
     }
 }
+export default withRouter(Menus)

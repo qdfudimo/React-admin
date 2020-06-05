@@ -5,7 +5,8 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import LoginRegister from "./view/login/index"
 import NotFound from "./view/404"
 import Layouts from "./view/layout/index"
-import Author from "./components//author"
+import Author from "./components/author"
+// import Homes from './view/HomeIndex/HomeIndex'
 class App extends Component {
   UNSAFE_componentWillMount() {
     if (!this.props.isFresh) {
@@ -19,10 +20,11 @@ class App extends Component {
     return (
       <Router>
         <Switch>
-          <Route path="/" exact render={Author(Layouts)} />
           <Route path="/login" component={LoginRegister} />
           <Route path="/register" component={LoginRegister} />
-          <Route component={NotFound}/>
+          <Author path="/" component={Layouts}></Author>
+          {/* 这里不能加exact，会导致子路由匹配不到 */}
+          <Route component={NotFound} />
         </Switch>
       </Router>
     );

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Asider from "./Sider.js"
-import Header from "./Header.js"
+import Header from "./header/Header.js"
 import Content from "./Content.js"
 import "./index.less"
 import { Layout } from 'antd';

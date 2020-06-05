@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
+import { withRouter } from 'react-router-dom';
 import "./index.less"
 import Menu from './Menu/Menu.js'
-import { Layout} from 'antd';
+import { Layout } from 'antd';
 const { Sider } = Layout;
-export default class Asider extends Component {
+class Asider extends Component {
+
     render() {
         return (
             <Sider trigger={null} collapsible collapsed={this.props.collapsed} style={{
@@ -13,8 +15,9 @@ export default class Asider extends Component {
                 // left: 0,
             }}>
                 <div className="logo"></div>
-                <Menu/>
+                <Menu />
             </Sider>
         )
     }
 }
+export default withRouter(Asider)
