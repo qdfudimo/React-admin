@@ -1,0 +1,68 @@
+:global {
+    .ava.ant-avatar.ant-avatar-image {
+        // :global {
+        width: 40px;
+        height: 40px;
+        float: right;
+        top: 12px;
+        right: 12px;
+        overflow: visible;
+
+        img {
+            overflow: hidden;
+            border-radius: 50%;
+            transition: all 1s;
+
+            &:hover {
+                transform: scale(1.2) rotate(-180deg);
+                // transform: ;
+            }
+        }
+
+        &::before {
+            content: "";
+            display: block;
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 10px;
+            height: 10px;
+            border-width: 2px;
+            border-radius: 50%;
+            border-style: solid;
+            border-color: #fff;
+            background-color: #6cc788;
+            z-index: 4;
+        }
+
+        // }
+    }
+}
+
+:global {
+    .warn {
+        float: right;
+        position: relative;
+        top: 2px;
+        right: 110px;
+
+        .anticon-bell {
+            color: #fff;
+            font-size: 24px;
+            margin-top: 2px;
+        }
+    }
+}
+
+.trigger {
+    font-size: 18px;
+    line-height: 64px;
+    padding: 0 24px;
+    cursor: pointer;
+    color: #ccc;
+    transition: color 0.3s;
+}
+
+.trigger:hover {
+    color: #1890ff;
+}

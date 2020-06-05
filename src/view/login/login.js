@@ -1,6 +1,6 @@
 /*eslint-disable*/
 import React, { Component, Fragment } from 'react'
-import "./login.less"
+import  style  from "./login.module.less"
 import { Form, Input, Button, Checkbox, Modal } from 'antd';
 import { Link } from 'react-router-dom'
 import { connect } from "react-redux"
@@ -25,7 +25,7 @@ class Login extends Component {
     }
     onFinish = function (val) {
         if (val.username == "" || val.password == "") return
-        this.props.user({ ...val, checked: this.state.checked, isLogin: true,isFresh:true })
+        this.props.user({ ...val, checked: this.state.checked, isLogin: true, isFresh: true })
         sessionStorage.setItem('store', JSON.stringify({ ...val, checked: this.state.checked, isLogin: true }));
         this.props.history.push("/")
     };
@@ -80,29 +80,29 @@ class Login extends Component {
                     >
                         <Input.Password />
                     </Form.Item>
-                    <div className="rember">
-                        <Checkbox checked={this.state.checked} onChange={this.onChange.bind(this)}>记住密码</Checkbox><span className="forget">忘记密码</span>
+                    <div className={style.rember}>
+                        <Checkbox checked={this.state.checked} onChange={this.onChange.bind(this)}>记住密码</Checkbox><span className={style.forget}>忘记密码</span>
                     </div>
-                    <div className="button">
+                    <div className={style.button}>
                         <Button type="primary" htmlType="submit">登录</Button>
                     </div>
-                    <div className="register">
-                        现在去<Link to="/register" className="registers">注册</Link>
-                        <span className="iconfont icon-weixin icons"></span>
-                        <span className="iconfont icon-qq icons"></span>
-                        <span className="iconfont icon-weixin1 icons" onClick={this.click.bind(this)}></span>
+                    <div className={style.register}>
+                        现在去<Link to="/register" className={style.registers}>注册</Link>
+                        <span className="iconfont icon-weixin" className={style.icons}></span>
+                        <span className="iconfont icon-qq" className={style.icons}></span>
+                        <span className="iconfont icon-weixin1" className={style.icons} onClick={this.click.bind(this)}></span>
                     </div>
                 </Form>
                 <Modal
                     title="打赏"
                     visible={this.state.visible}
                     footer={[
-                        <Button key="back" type="primary" onClick={() =>this.setState({visible:false})}>
+                        <Button key="back" type="primary" onClick={() => this.setState({ visible: false })}>
                             关闭
                         </Button>
                     ]}
                 >
-                    <img src={imgurl} className="img"/>
+                    <img src={imgurl} className={style.img} />
                 </Modal>
             </Fragment>
         )

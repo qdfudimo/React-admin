@@ -14,6 +14,7 @@ module.exports = override(
     }),
     addLessLoader({
         javascriptEnabled: true,
+        localIdentName: '[local]--[hash:base64:5]',
         modifyVars: {
             "@primary-color": "#1DA57A",
             "@link-color": "#ccc",

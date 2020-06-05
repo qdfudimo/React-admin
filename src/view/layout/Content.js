@@ -13,7 +13,7 @@ import Charts from "../charts/Charts"
 import Twomenu from "../menus/Twomenu/Twomenu"
 import ThreeMenu from "../menus/Twomenu/ThreeMenu"
 import NotFound from "../404.js"
-import { withRouter, Route, Switch, Redirect,Link } from 'react-router-dom';
+import { withRouter, Route, Switch, Redirect} from 'react-router-dom';
 import { Layout, Breadcrumb } from 'antd';
 const { Content } = Layout;
 class Contents extends Component {
@@ -41,7 +41,7 @@ class Contents extends Component {
                     margin: '15px',
                     fontSize: "16px"
                 }} >
-                    <Breadcrumb.Item><Link to={{pathname: "/home", state: "首页"}}>首页</Link></Breadcrumb.Item>
+                    <Breadcrumb.Item>首页</Breadcrumb.Item>
                     {this.Breadcrumbs()}
                 </Breadcrumb>
 

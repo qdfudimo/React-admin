@@ -1,5 +1,6 @@
+/*eslint-disable*/
 import React, { Component } from 'react'
-import "./register.less"
+import style from "./register.module.less"
 import "@/assets/fonts/iconfont.css"
 export default class Register extends Component {
     click = function () {
@@ -7,9 +8,9 @@ export default class Register extends Component {
     }
     render() {
         return (
-            <div className="txt">
+            <div className={style.txt}>
                 想啥了，还要注册
-                <div className="iconfont icon-xiaolian icons" onClick={this.click.bind(this)}></div>
+                <div className="iconfont icon-xiaolian" className={style.icons} onClick={this.click.bind(this)}></div>
             </div>
         )
     }

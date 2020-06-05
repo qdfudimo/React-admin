@@ -7,7 +7,7 @@ function splits(params) {
     let val = params
     let i = val.split("/")
     let str = ""
-    let arr =[]
+    let arr = []
     if (i.length > 1) {
         for (var l = 1; l < i.length - 1; l++) {
             str += `/${i[l]}`
@@ -16,6 +16,37 @@ function splits(params) {
     }
     return arr
 }
+/**
+ * @param {throttle}  节流函数 一段时间内只会执行一次
+ */
+function throttle(fn, delay) {
+    var timer, content, args;
+    let previous = 0;
+    var later = function () {
+        previous = +new Date();
+        timer = null;
+        fn.apply(content, args)
+    }
+    return function () {
+        let now = +new Date();
+        //下次出发fn的时间
+        content = this;
+        args = arguments;
+        var remaining = delay - (now - previous)
+        //防止修改系统时间
+        if (remaining <= 0 || remaining > delay) {
+            if (timer) {
+                clearTimeout(timer)
+                timer = null;
+            }
+            previous = now;
+            fn.apply(content, args)
+        } else if (!timer) {
+            timer = setTimeout(later, delay);
+        }
+    }
+}
 export {
-    splits
+    splits,
+    throttle
 }
