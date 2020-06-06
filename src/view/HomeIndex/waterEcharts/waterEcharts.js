@@ -2,7 +2,7 @@
 import React, { Component, Fragment } from 'react'
 import { throttle } from "@/utils/index"
 import echarts from 'echarts';
-import 'echarts-liquidfill/src/liquidFill.js'
+import 'echarts-liquidfill/src/liquidFill.js';
 export default class Echarts extends Component {
     constructor(props) {
         super(props);
@@ -48,7 +48,7 @@ export default class Echarts extends Component {
                     textAlign: 'center',
                 },
             }],
-            backgroundColor: '#fff',
+            backgroundColor: 'transparent',
             series: [{
                 type: 'liquidFill',
                 radius: '70%',
@@ -144,6 +144,9 @@ export default class Echarts extends Component {
         this.dispose()
         window.removeEventListener('resize', throttle(this.resize, 500))
     }
+    // componentDidUpdate() {
+    //     this.setOption(option);
+    // }
     initChart = (ref) => {
         this.chart = echarts.init(ref);
     }

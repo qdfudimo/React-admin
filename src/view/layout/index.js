@@ -1,3 +1,4 @@
+/*eslint-disable*/
 import React, { Component } from 'react'
 import Asider from "./Sider.js"
 import Header from "./header/Header.js"

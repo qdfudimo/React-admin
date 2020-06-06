@@ -1,12 +1,21 @@
-import React, { Component } from 'react'
+/*eslint-disable*/
+import React, { Component, lazy, Suspense } from 'react'
 import { connect } from "react-redux"
 import { userData } from "./reducer/Action"
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import LoginRegister from "./view/login/index"
-import NotFound from "./view/404"
-import Layouts from "./view/layout/index"
+
+// import Layouts from "./view/layout/index"
 import Author from "./components/author"
-// import Homes from './view/HomeIndex/HomeIndex'
+const Layouts = lazy(() => import("./view/layout/index"))
+const NotFound = lazy(() => import("./view/404"))
+const LoginRegister = lazy(() => import("./view/login/index"))
+const SuspenseComponent = Component => props => {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <Component {...props}></Component>
+    </Suspense>
+  )
+}
 class App extends Component {
   UNSAFE_componentWillMount() {
     if (!this.props.isFresh) {
@@ -20,11 +29,11 @@ class App extends Component {
     return (
       <Router>
         <Switch>
-          <Route path="/login" component={LoginRegister} />
-          <Route path="/register" component={LoginRegister} />
-          <Author path="/" component={Layouts}></Author>
+          <Route path="/login" component={SuspenseComponent(LoginRegister)} />
+          <Route path="/register" component={SuspenseComponent(LoginRegister)} />
+          <Author path="/" component={SuspenseComponent(Layouts)}></Author>
           {/* 这里不能加exact，会导致子路由匹配不到 */}
-          <Route component={NotFound} />
+          <Route component={SuspenseComponent(NotFound)} />
         </Switch>
       </Router>
     );

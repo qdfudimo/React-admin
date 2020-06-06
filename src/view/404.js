@@ -10,9 +10,4 @@ function NotFound(props) {
         />
     )
 }
-// export default class NotFound extends Component {
-//     render() {
-
-//     }
-// }
 export default NotFound
