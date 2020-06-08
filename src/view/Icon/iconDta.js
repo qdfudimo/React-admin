@@ -27,6 +27,7 @@ import {
     WomanOutlined ,
     TrophyOutlined,
     DeleteFilled,
+    ScissorOutlined
 } from '@ant-design/icons';
 const iconData = [
     {
@@ -136,6 +137,10 @@ const iconData = [
     {
     name: "DeleteFilled",
     group:<DeleteFilled/>
+},
+    {
+    name: "ScissorOutlined",
+    group:<ScissorOutlined/>
 }
 ]
 export default iconData

@@ -5,8 +5,8 @@ import { Layout, Breadcrumb } from 'antd';
 const { Content } = Layout;
 const Homes = lazy(() => import("../HomeIndex/HomeIndex"))
 const Icon = lazy(() => import("../Icon/Icon"))
-const Editor = lazy(() => import("../components/Editor"))
-const Markdown = lazy(() => import("../components/Markdown"))
+const Editor = lazy(() => import("../components/Editor/Editor"))
+const Markdown = lazy(() => import("../components/Markdown/Markdown"))
 const Digalog = lazy(() => import("../drop/Digalog"))
 const DrgTable = lazy(() => import("../drop/DrgTable"))
 const User = lazy(() => import("../user/User"))

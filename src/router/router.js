@@ -35,8 +35,8 @@ const menuData = [
         children: [
             {
                 path: '/components/editor',
-                title: '富文本',
-                cont: ['常用组件','富文本'],
+                title: '富文本编辑器',
+                cont: ['常用组件','富文本编辑器'],
                 icon: <EditOutlined />
             },
             {

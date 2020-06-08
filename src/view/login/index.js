@@ -5,6 +5,9 @@ import { Route, Switch } from "react-router-dom";
 import Login from "./login"
 import Register from "../Register/Register"
 export default class Logins extends Component {
+    UNSAFE_componentWillMount() {
+        document.title = `login-React admin`
+    }
     render() {
         return (
             <div className={style.login}>

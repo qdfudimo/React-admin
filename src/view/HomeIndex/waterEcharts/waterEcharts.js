@@ -8,7 +8,10 @@ export default class Echarts extends Component {
         super(props);
         this.state = {
             width: '100%',
-            height: '100%'
+            height: '100%',
+            data1: [0.83, 0.83, 0.832, 0.83, 0.83],
+            data2: [0.564, 0.564, 0.564, 0.564, 0.564],
+            data3: [0.23, 0.23, 0.23, 0.23, 0.23]
         };
         this.chart = null;
     }
@@ -52,18 +55,18 @@ export default class Echarts extends Component {
             series: [{
                 type: 'liquidFill',
                 radius: '70%',
-                color: ["#00BFFF"],
+                color: [...this.colors(this.state.data1[0])],
                 center: ['20%', '50%'],
-                data: [0.4544, 0.4544, 0.4544, 0.4544, 0.4544],
+                data: this.state.data1,
                 backgroundStyle: {
                     borderWidth: 2,
-                    borderColor: '#1E90FF',
+                    borderColor: this.colors(this.state.data1[0])[0],
                     color: '#fff',
                 },
                 outline: {
                     itemStyle: {
                         borderWidth: 5,
-                        borderColor: '#1E90FF',
+                        borderColor: this.colors(this.state.data1[0])[0],
                         borderType: 'dashed',
                     }
                 },
@@ -77,21 +80,20 @@ export default class Echarts extends Component {
                 },
             },
             {
-
                 type: 'liquidFill',
                 radius: '70%',
-                color: ['#FF7F50'],
+                color: [...this.colors(this.state.data2[0])],
                 center: ['50%', '50%'],
-                data: [0.6, 0.6, 0.6, 0.6, 0.6],
+                data: this.state.data2,
                 backgroundStyle: {
                     borderWidth: 2,
-                    borderColor: '#eb5c4d',
+                    borderColor: this.colors(this.state.data2[0])[0],
                     color: '#fff',
                 },
                 outline: {
                     itemStyle: {
                         borderWidth: 5,
-                        borderColor: '#eb5c4d',
+                        borderColor: this.colors(this.state.data2[0])[0],
                         borderType: 'dashed',
                     }
                 },
@@ -109,18 +111,18 @@ export default class Echarts extends Component {
 
                 type: 'liquidFill',
                 radius: '70%',
-                color: ['#90EE90'],
+                color: [...this.colors(this.state.data3[0])],
                 center: ['80%', '50%'],
-                data: [0.23, 0.23, 0.23, 0.23, 0.23],
+                data: this.state.data3,
                 backgroundStyle: {
                     borderWidth: 2,
-                    borderColor: '	#00FF00',
+                    borderColor: this.colors(this.state.data3[0])[0],
                     color: '#fff',
                 },
                 outline: {
                     itemStyle: {
                         borderWidth: 5,
-                        borderColor: '	#00FF00',
+                        borderColor: this.colors(this.state.data3[0])[0],
                         borderType: 'dashed',
                     }
                 },
@@ -147,6 +149,27 @@ export default class Echarts extends Component {
     // componentDidUpdate() {
     //     this.setOption(option);
     // }
+    colors = (data) => {
+        let colorScore = data * 100;
+        let colorList = [];
+        if (colorScore < 50) {
+            let color1 = "rgb(45,224,1135)";
+            let color2 = "rgb(74,227,141)";
+            colorList.push(color1);
+            colorList.push(color2);
+        } else if (colorScore >= 50 && colorScore < 80) {
+            let color1 = "rgb(41,145,235)";
+            let color2 = "rgb(0,137,255)";
+            colorList.push(color1);
+            colorList.push(color2);
+        } else if (colorScore >= 80) {
+            let color1 = "rgb(207,74,84)";
+            let color2 = "rgb(243,17,34)";
+            colorList.push(color1);
+            colorList.push(color2);
+        }
+        return colorList
+    }
     initChart = (ref) => {
         this.chart = echarts.init(ref);
     }
