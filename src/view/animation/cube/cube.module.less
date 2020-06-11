@@ -1,0 +1,55 @@
+.father {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    margin: 50px auto;
+    // background-color: pink;
+    transform: rotate3d(1, 1, 0, -45deg);
+    transform-style: preserve-3d;
+    animation: rotate 6s linear infinite;
+    &:hover {
+        animation-play-state: paused;
+    }
+
+    div {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 200px;
+        height: 200px;
+        line-height: 200px;
+        text-align: center;
+        font-size: 20px;
+        &:nth-child(1) {
+            background-color: burlywood;
+            transform: translateZ(100px);
+        }
+        &:nth-child(2) {
+            background-color: greenyellow;
+            transform: rotateY(90deg) translateZ(100px);
+        }
+        &:nth-child(3) {
+            background-color: aqua;
+            transform: rotateY(180deg) translateZ(100px);
+        }
+        &:nth-child(4) {
+            background-color: rebeccapurple;
+            transform: rotateY(-90deg) translateZ(100px);
+        }
+        &:nth-child(5) {
+            background-color: tomato;
+            transform: rotateX(90deg) translateZ(100px);
+        }
+        &:nth-child(6) {
+            background-color: forestgreen;
+            transform: rotateX(-90deg) translateZ(100px);
+        }
+    }
+    @keyframes rotate {
+        from {}
+        to {
+            transform: rotate3d(1,1,0,300deg);
+        }
+    }
+    
+}

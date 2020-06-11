@@ -1,6 +1,6 @@
 /*eslint-disable*/
 import React, { Component, Fragment } from 'react'
-import  style  from "./login.module.less"
+import style from "./login.module.less"
 import { Form, Input, Button, Checkbox, Modal } from 'antd';
 import { Link } from 'react-router-dom'
 import { connect } from "react-redux"
@@ -20,7 +20,8 @@ class Login extends Component {
         super(props)
         this.state = {
             checked: true,
-            visible: false
+            visible: false,
+            num: 1
         }
     }
     onFinish = function (val) {
@@ -39,6 +40,10 @@ class Login extends Component {
             visible: true
         })
     }
+    // handel = () => {
+    //     this.setState(() => this.state.num + 1)
+    //     this.setState(() => this.state.num + 1)
+    // }
     render() {
         return (
             <Fragment>
@@ -104,6 +109,9 @@ class Login extends Component {
                 >
                     <img src={imgurl} className={style.img} />
                 </Modal>
+                {/* <Button key="back" type="primary" onClick={this.handel}>
+                    关闭
+                        </Button> */}
             </Fragment>
         )
     }

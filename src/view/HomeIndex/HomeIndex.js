@@ -44,11 +44,11 @@ export default class HomeIdenx extends Component {
     }
     card = (val) => {
         return (<Col span={12}>
-            <Card bordered={false} >
-                <div className={style.icons}>
+            <Card bordered={false} className="left">
+                <div className="icons">
                     <IconFont type={val.type} />
                 </div>
-                <div className={style.content}>
+                <div className="content">
                     <i>{val.name}</i>
                     <p>{val.num}</p>
                 </div>
@@ -90,7 +90,7 @@ export default class HomeIdenx extends Component {
             <Fragment>
                 <Row>
                     <Col span={8} className="cards">
-                        <Row gutter={18}>
+                        <Row gutter={18}> 
                             {this.card({ name: "点赞", type: "icon-dianzan", num: "1284" })}
                             {this.card({ name: "留言", type: "icon-liuyan", num: "1" })}
                         </Row>

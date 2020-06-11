@@ -2,13 +2,17 @@ import React, { Component, lazy, Suspense } from 'react'
 import "./index.less"
 import { withRouter, Route, Switch, Redirect } from 'react-router-dom';
 import { Layout, Breadcrumb } from 'antd';
+import { LoadingOutlined } from '@ant-design/icons';
 const { Content } = Layout;
 const Homes = lazy(() => import("../HomeIndex/HomeIndex"))
 const Icon = lazy(() => import("../Icon/Icon"))
 const Editor = lazy(() => import("../components/Editor/Editor"))
 const Markdown = lazy(() => import("../components/Markdown/Markdown"))
-const Digalog = lazy(() => import("../drop/Digalog"))
-const DrgTable = lazy(() => import("../drop/DrgTable"))
+const Digalog = lazy(() => import("../drop/Digalog/Digalog"))
+const DrgTable = lazy(() => import("../drop/DrgTable/DrgTable"))
+const Bagua = lazy(() => import("../animation/bagua"))
+const Cube = lazy(() => import("../animation/cube"))
+const Carousel = lazy(() => import("../animation/carousel"))
 const User = lazy(() => import("../user/User"))
 const Role = lazy(() => import("../role/Role"))
 const Table = lazy(() => import("../table/Table"))
@@ -18,7 +22,7 @@ const ThreeMenu = lazy(() => import("../menus/Twomenu/ThreeMenu"))
 const NotFound = lazy(() => import("../404.js"))
 const SuspenseComponent = Component => props => {
     return (
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<div style={{color:"#000",fontSize:"20px",padding:"30px"}}><LoadingOutlined />&nbsp;&nbsp;&nbsp;Loading...</div>}>
             <Component {...props}></Component>
         </Suspense>
     )
@@ -61,6 +65,10 @@ class Contents extends Component {
                     <Route path="/drop" exact component={SuspenseComponent(Digalog)} />
                     <Route path="/drop/dialog" component={SuspenseComponent(Digalog)} />
                     <Route path="/drop/table" component={SuspenseComponent(DrgTable)} />
+                    <Route path="/c3" exact component={SuspenseComponent(Bagua)} />
+                    <Route path="/c3/bagua" component={SuspenseComponent(Bagua)} />
+                    <Route path="/c3/cube" component={SuspenseComponent(Cube)} />
+                    <Route path="/c3/carousel" component={SuspenseComponent(Carousel)} />
                     <Route path="/user" component={SuspenseComponent(User)} />
                     <Route path="/role" component={SuspenseComponent(Role)} />
                     <Route path="/table" component={SuspenseComponent(Table)} />

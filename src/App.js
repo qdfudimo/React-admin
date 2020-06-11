@@ -3,7 +3,7 @@ import React, { Component, lazy, Suspense } from 'react'
 import { connect } from "react-redux"
 import { userData } from "./reducer/Action"
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-
+import { LoadingOutlined } from '@ant-design/icons';
 // import Layouts from "./view/layout/index"
 import Author from "./components/author"
 const Layouts = lazy(() => import("./view/layout/index"))
@@ -11,7 +11,7 @@ const NotFound = lazy(() => import("./view/404"))
 const LoginRegister = lazy(() => import("./view/login/index"))
 const SuspenseComponent = Component => props => {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<div style={{color:"#000",fontSize:"20px",padding:"30px"}}><LoadingOutlined />&nbsp;&nbsp;&nbsp;Loading...</div>}>
       <Component {...props}></Component>
     </Suspense>
   )

@@ -6,7 +6,7 @@ import {
     MenuOutlined,
     QqOutlined,
     UsergroupDeleteOutlined,
-    WechatOutlined,
+    WechatOutlined, 
     AndroidOutlined,
     AreaChartOutlined,
     UnderlineOutlined,
@@ -15,7 +15,11 @@ import {
     AppstoreAddOutlined,
     DragOutlined,
     PlusSquareOutlined,
-    OrderedListOutlined
+    OrderedListOutlined,
+    ChromeFilled,
+    BorderOuterOutlined,
+    RedoOutlined,
+    RedditOutlined
 } from '@ant-design/icons';
 const menuData = [
     {
@@ -64,6 +68,31 @@ const menuData = [
                 title: '表格拖拽',
                 cont: ['拖拽 移动','表格拖拽'],
                 icon: <PlusSquareOutlined />
+            }
+        ]
+    },
+    {
+        path: '/c3',
+        title: 'C3 动画',
+        icon: <RedditOutlined />,
+        children: [
+            {
+                path: '/c3/bagua',
+                title: '太极图',
+                cont: ['C3 动画','太极图'],
+                icon: <ChromeFilled />
+            },
+            {
+                path: '/c3/cube',
+                title: '正方体',
+                cont: ['C3 动画','正方体'],
+                icon: <BorderOuterOutlined />
+            },
+            {
+                path: '/c3/carousel',
+                title: '旋转木马',
+                cont: ['C3 动画','旋转木马'],
+                icon: <RedoOutlined />
             }
         ]
     },

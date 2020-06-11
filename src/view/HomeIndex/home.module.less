@@ -17,11 +17,57 @@
             height: 100%;
         }
     }
+
     .pro {
-        // float: left;
-        width: 75%;
-        display: inline-block;
-        vertical-align: middle;
+        flex: 8;
+    }
+    .left {
+        .ant-card-body {
+            display: flex;
+            flex-direction: row;
+    
+            .icons {
+                padding-left: 20px;
+                font-size: 38px;
+                flex: 3;
+                // width: 30%;
+                // float: left;
+                cursor: pointer;
+                transition: all 1.4s;
+    
+                &:hover {
+                    transform: scale(1.3) rotate(180deg);
+                }
+            }
+    
+            .content {
+                flex: 7;
+                padding-left: 20px;
+                // float: left;
+                overflow: hidden;
+                text-align: center;
+    
+                i {
+                    font-style: normal;
+                    font-weight: 700;
+                    font-size: 20px;
+                    text-shadow: 2px 3px 3px rgba(0, 0, 0, .5);
+                }
+    
+                p {
+                    font-size: 24px;
+                    color: #000;
+                    text-shadow: 2px 3px 3px rgba(68, 4, 4, 0.5);
+                    transition: all .8s;
+    
+                    &:hover {
+                        transform: scale(1.3);
+                    }
+                }
+            }
+        }
+    
+    
     }
 }
 
@@ -30,55 +76,20 @@
     // box-shadow: 5px 5px 5px rgba(0, 0, 0, .5);
     border-radius: 10px;
     overflow: hidden;
+
     img {
         width: 100%;
         height: 200px;
         display: block;
         transition: all 1s;
     }
+
     img:hover {
         transform: scale(1.3);
     }
 }
 
-.icons {
-    padding-left: 30px;
-    font-size: 38px;
-    width: 30%;
-    float: left;
-    cursor: pointer;
-    transition: all 1.4s;
 
-    &:hover {
-        transform: scale(1.3) rotate(180deg);
-    }
-}
-
-.content {
-    width: 70%;
-    padding-left: 20%;
-    float: left;
-    overflow: hidden;
-    text-align: center;
-
-    i {
-        font-style: normal;
-        font-weight: 700;
-        font-size: 20px;
-        text-shadow: 2px 3px 3px rgba(0, 0, 0, .5);
-    }
-
-    p {
-        font-size: 24px;
-        color: #000;
-        text-shadow: 2px 3px 3px rgba(68, 4, 4, 0.5);
-        transition: all .8s;
-
-        &:hover {
-            transform: scale(1.3);
-        }
-    }
-}
 
 .cover {
     .picture {
@@ -130,17 +141,23 @@
         }
     }
 }
+
 .ul {
     display: flex;
     padding-top: 20px;
     flex-direction: column;
     list-style: none;
-    .names {
-        width: 19%;
-        float: left;
-        color: #000;
-        font-size: 18px;
-        padding-left: 10px;
-        font-weight: 700;
+    li {
+        display: flex;
+        align-items: center;
+        .names {
+            flex: 3;
+            // width: 19%;
+            color: #000;
+            font-size: 18px;
+            padding-left: 10px;
+            font-weight: 700;
+        }
     }
+
 }

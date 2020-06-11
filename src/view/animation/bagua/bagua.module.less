@@ -1,0 +1,35 @@
+.squre {
+    margin:auto;
+    width: 200px;
+    height: 400px;
+    background-color: #fff;
+    border-left: 200px solid #000;
+    border-radius: 50%;
+    box-sizing: content-box;
+    transition: all 1s;
+    &::after {
+        content: "";
+        display: block;
+        width: 50px;
+        height: 50px;
+        background-color: #fff;
+        border: 75px solid #000;
+        margin-left: -100px;
+        box-sizing: content-box;
+        border-radius: 50%;
+    }
+    &::before {
+        content: "";
+        display: block;
+        width: 50px;
+        height: 50px;
+        background-color: #000;
+        border: 75px solid #fff;
+        margin-left: -100px;
+        box-sizing: content-box;
+        border-radius: 50%;
+    }
+    &:hover {
+        transform: rotate(-360deg) scale(.8);
+    }
+}
