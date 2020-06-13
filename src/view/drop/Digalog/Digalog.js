@@ -73,9 +73,6 @@ function Digalog() {
             } else if (top > maxDragDomTop) {
                 top = maxDragDomTop
             }
-            // console.log(left + styL);
-            // console.log(top + styT);
-            // drag.style.cssText += `;left:${left + styL}px;top:${top + styT}px;`
             drag.style.left = `${left + styL}px`
             drag.style.top = `${top + styT}px`
         }

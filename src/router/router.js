@@ -19,7 +19,8 @@ import {
     ChromeFilled,
     BorderOuterOutlined,
     RedoOutlined,
-    RedditOutlined
+    RedditOutlined,
+    SplitCellsOutlined
 } from '@ant-design/icons';
 const menuData = [
     {
@@ -68,6 +69,12 @@ const menuData = [
                 title: '表格拖拽',
                 cont: ['拖拽 移动','表格拖拽'],
                 icon: <PlusSquareOutlined />
+            },
+            {
+                path: '/drop/list',
+                title: '列表拖拽',
+                cont: ['拖拽 移动','列表拖拽'],
+                icon: <SplitCellsOutlined />
             }
         ]
     },

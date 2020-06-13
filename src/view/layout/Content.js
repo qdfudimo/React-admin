@@ -10,6 +10,7 @@ const Editor = lazy(() => import("../components/Editor/Editor"))
 const Markdown = lazy(() => import("../components/Markdown/Markdown"))
 const Digalog = lazy(() => import("../drop/Digalog/Digalog"))
 const DrgTable = lazy(() => import("../drop/DrgTable/DrgTable"))
+const List = lazy(() => import("../drop/List/List"))
 const Bagua = lazy(() => import("../animation/bagua"))
 const Cube = lazy(() => import("../animation/cube"))
 const Carousel = lazy(() => import("../animation/carousel"))
@@ -65,6 +66,7 @@ class Contents extends Component {
                     <Route path="/drop" exact component={SuspenseComponent(Digalog)} />
                     <Route path="/drop/dialog" component={SuspenseComponent(Digalog)} />
                     <Route path="/drop/table" component={SuspenseComponent(DrgTable)} />
+                    <Route path="/drop/list" component={SuspenseComponent(List)} />
                     <Route path="/c3" exact component={SuspenseComponent(Bagua)} />
                     <Route path="/c3/bagua" component={SuspenseComponent(Bagua)} />
                     <Route path="/c3/cube" component={SuspenseComponent(Cube)} />
