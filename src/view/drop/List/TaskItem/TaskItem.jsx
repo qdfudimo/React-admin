@@ -33,7 +33,7 @@ function TaskItem(props) {
         setNowTime(Date.now())
         e.persist()
         setMoveY(e.clientY-startY)
-        let num = Math.floor(moveY/80)
+        let num = Math.round(moveY/80)
         props.num(num,id)
     }
     return (

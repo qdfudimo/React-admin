@@ -1,0 +1,40 @@
+.preview_img {
+    position: relative;
+    height: 398px;
+    border: 1px solid #ccc;
+    width: 398px;
+    box-sizing: content-box;
+    img {
+        vertical-align: middle;
+    }
+    .mask {
+        // display: none;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 300px;
+        height: 300px;
+        background: #FEDE4F;
+        opacity: .5;
+        border: 1px solid #ccc;
+        cursor: move;
+    }
+    .big {
+        // display: none;
+        position: absolute;
+        left: 410px;
+        top: 0;
+        width: 500px;
+        height: 500px;
+        background-color: pink;
+        z-index: 999;
+        border: 1px solid #ccc;
+        overflow: hidden;
+    }
+    
+    .big img {
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+}

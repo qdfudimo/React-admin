@@ -13,7 +13,7 @@ import chui from "@/assets/img/chui.jpg";
 import mayun from "@/assets/img/mayun.jpg";
 // import iconFont from '@/utils/iconfont.js';
 const IconFont = createFromIconfontCN({
-    scriptUrl: "//at.alicdn.com/t/font_1865464_x71m37jl97.js"
+    scriptUrl: "//at.alicdn.com/t/font_1865464_x0m73b29nk.js"
 });
 
 export default class HomeIdenx extends Component {

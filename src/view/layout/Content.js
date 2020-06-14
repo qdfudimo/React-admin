@@ -11,9 +11,11 @@ const Markdown = lazy(() => import("../components/Markdown/Markdown"))
 const Digalog = lazy(() => import("../drop/Digalog/Digalog"))
 const DrgTable = lazy(() => import("../drop/DrgTable/DrgTable"))
 const List = lazy(() => import("../drop/List/List"))
+const Magnifying = lazy(() => import("../drop/Magnifying/Magnifying"))
 const Bagua = lazy(() => import("../animation/bagua"))
 const Cube = lazy(() => import("../animation/cube"))
 const Carousel = lazy(() => import("../animation/carousel"))
+const Earth = lazy(() => import("../animation/Earth"))
 const User = lazy(() => import("../user/User"))
 const Role = lazy(() => import("../role/Role"))
 const Table = lazy(() => import("../table/Table"))
@@ -67,10 +69,12 @@ class Contents extends Component {
                     <Route path="/drop/dialog" component={SuspenseComponent(Digalog)} />
                     <Route path="/drop/table" component={SuspenseComponent(DrgTable)} />
                     <Route path="/drop/list" component={SuspenseComponent(List)} />
+                    <Route path="/drop/fangda" component={SuspenseComponent(Magnifying)} />
                     <Route path="/c3" exact component={SuspenseComponent(Bagua)} />
                     <Route path="/c3/bagua" component={SuspenseComponent(Bagua)} />
                     <Route path="/c3/cube" component={SuspenseComponent(Cube)} />
                     <Route path="/c3/carousel" component={SuspenseComponent(Carousel)} />
+                    <Route path="/c3/earth" component={SuspenseComponent(Earth)} />
                     <Route path="/user" component={SuspenseComponent(User)} />
                     <Route path="/role" component={SuspenseComponent(Role)} />
                     <Route path="/table" component={SuspenseComponent(Table)} />

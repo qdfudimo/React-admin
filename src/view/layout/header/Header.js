@@ -7,9 +7,12 @@ import {
     MenuFoldOutlined,
     BellOutlined
 } from '@ant-design/icons';
+import { createFromIconfontCN } from '@ant-design/icons';
 import pig from "../../../assets/img/huaji.jpg"
 const { Header } = Layout;
-
+const IconFont = createFromIconfontCN({
+    scriptUrl: "//at.alicdn.com/t/font_1865464_x0m73b29nk.js"
+});
 export default class header extends Component {
     toggle = () => {
         this.props.toggle()
@@ -42,9 +45,16 @@ export default class header extends Component {
                 <Badge status="default" />
                 <Badge status="processing" />
                 <Badge status="warning" />
-                <div className="warn"><Badge count={1000} overflowCount={999}>
-                <BellOutlined />
-                </Badge></div>
+                <div className={style.git}>
+                    <a href="https://github.com/qdfudimo/React-admin" target="_blank" rel="noopener noreferrer">
+                        <IconFont type="icon-github" />
+                    </a>
+                </div>
+                <div className="warn">
+                    <Badge count={1000} overflowCount={999}>
+                        <BellOutlined />
+                    </Badge>
+                </div>
                 <Dropdown overlay={this.menu} className="ava">
                     <Avatar src={pig} />
                 </Dropdown>

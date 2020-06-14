@@ -9,7 +9,7 @@ function List() {
     const STATUS_DOING = 'STATUS_DOING';
     const STATUS_DONE = 'STATUS_DONE';
     const STATUS_CODE = {
-        STATUS_TODO: '待处理',
+        STATUS_TODO: '计划中',
         STATUS_DOING: '进行中',
         STATUS_DONE: '已完成'
     }
@@ -46,13 +46,13 @@ function List() {
     }]
     const [id, setId] = useState(null)
     const [tasks, setTasks] = useState(data)
-    const [match,setMatch] = useState(null)
+    const [match, setMatch] = useState(null)
     const dragStart = (id) => {
         setId(id)
     }
     const drop = (status) => {
         tasks.forEach(item => {
-            if(item.id === id) {
+            if (item.id === id) {
                 item.status = status
             }
         })
@@ -60,27 +60,30 @@ function List() {
         setId(null)
         setMatch(null)
     }
-    const dragEnd =() => {
+    const dragEnd = () => {
         setId(null)
     }
-    const enter =(status) => {
+    const enter = (status) => {
         setMatch(STATUS_CODE[status])
     }
-    const num =(item,id) => {
+    const num = (item, id) => {
         let dats = tasks;
         let i;
-        dats.forEach((item,index) => {
-            if(item.id === id) {
-                i =index
+        dats.forEach((item, index) => {
+            if (item.id === id) {
+                i = index
             }
         })
-        let one = dats.splice(i,1)
-        dats.splice(item,0,...one)
+        let one = dats.splice(i, 1)
+        // if (item < 0) {
+        //     item = item - 1
+        // }
+        dats.splice(item, 0, ...one)
         setTasks(dats)
     }
 
     return (
-        <Card title="列表拖拽">
+        <Card title="列表拖拽" extra={<span style={{ color: "#999" }}><s>已禁止内部拖拽</s>&nbsp;&nbsp;&nbsp;列表内部拖拽还有bug，没有做边界判断,判断高度也不对（<span style={{ color: "#ccc" }}>待修证</span>）</span>}>
             <div className={style.wrapper}>
                 {
                     Object.keys(STATUS_CODE).map(status =>

@@ -4,7 +4,6 @@ const {
     addLessLoader,
     addWebpackAlias,
     // addWebpackPlugin
-    // addBundleVisualizer,
 } = require("customize-cra");
 const path = require("path");
 // const ProgressBarPlugin = require("progress-bar-webpack-plugin");
@@ -37,7 +36,6 @@ const addAnalyzer = () => config => {
   };
   
 module.exports = override(
-    // addBundleVisualizer(),
     fixBabelImports("import", {
         libraryName: "antd",
         libraryDirectory: "es",

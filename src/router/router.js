@@ -20,7 +20,9 @@ import {
     BorderOuterOutlined,
     RedoOutlined,
     RedditOutlined,
-    SplitCellsOutlined
+    SplitCellsOutlined,
+    ZoomInOutlined,
+    DribbbleOutlined
 } from '@ant-design/icons';
 const menuData = [
     {
@@ -75,6 +77,12 @@ const menuData = [
                 title: '列表拖拽',
                 cont: ['拖拽 移动','列表拖拽'],
                 icon: <SplitCellsOutlined />
+            },
+            {
+                path: '/drop/fangda',
+                title: '放大镜',
+                cont: ['拖拽 移动','放大镜'],
+                icon: <ZoomInOutlined />
             }
         ]
     },
@@ -100,6 +108,12 @@ const menuData = [
                 title: '旋转木马',
                 cont: ['C3 动画','旋转木马'],
                 icon: <RedoOutlined />
+            },
+            {
+                path: '/c3/earth',
+                title: '旋转地球',
+                cont: ['C3 动画','旋转地球'],
+                icon: <DribbbleOutlined />
             }
         ]
     },
@@ -120,7 +134,7 @@ const menuData = [
     },
     {
         path: '/charts',
-        title: '图表',
+        title: 'Echarts 地图',
         icon: <AreaChartOutlined />,
     },
     {
