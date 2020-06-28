@@ -51,6 +51,7 @@ class Contents extends Component {
                 style={{ margin: '0 16px', overflow: 'initial', backgroundColor: "transparent" }}
                 className="site-layout-background"
             >
+                <div>
                 <Breadcrumb style={{
                     margin: '15px',
                     fontSize: "16px"
@@ -58,7 +59,8 @@ class Contents extends Component {
                     <Breadcrumb.Item>首页</Breadcrumb.Item>
                     {this.Breadcrumbs()}
                 </Breadcrumb>
-
+                <div></div>
+                </div>
                 <Switch>
                     <Route path="/home" component={SuspenseComponent(Homes)} />
                     <Route path="/icon" component={SuspenseComponent(Icon)} />

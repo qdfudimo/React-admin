@@ -1,12 +1,13 @@
 /*eslint-disable*/
 import React, { Component, Fragment } from 'react'
 import style from "./login.module.less"
-import { Form, Input, Button, Checkbox, Modal } from 'antd';
+import { Form, Input, Button, Checkbox, Modal,message } from 'antd';
 import { Link } from 'react-router-dom'
 import { connect } from "react-redux"
 import { userData } from "../../reducer/Action"
 import "@/assets/fonts/iconfont.css"
 import imgurl from "@/assets/img/嘻嘻.png"
+import { login, register } from '@/api/request'
 const layout = {
     labelCol: {
         span: 5,
@@ -24,11 +25,24 @@ class Login extends Component {
             num: 1
         }
     }
-    onFinish = function (val) {
+    onFinish = async function (val) {
         if (val.username == "" || val.password == "") return
-        this.props.user({ ...val, checked: this.state.checked, isLogin: true, isFresh: true })
-        sessionStorage.setItem('store', JSON.stringify({ ...val, checked: this.state.checked, isLogin: true }));
-        this.props.history.push("/")
+        const data = {
+            userName: val.username,
+            passWord: val.password
+        }
+        const res = await login(data)
+        if(res.data.status == 200) {
+            this.props.user({ ...val, checked: this.state.checked, isFresh: true, token: res.data.token })
+            sessionStorage.setItem('store', JSON.stringify({ ...val, checked: this.state.checked, token: res.data.token }));
+            this.props.history.push("/")
+            message.success({
+                content: <span><span style={{ backgroundColor: "#f5f5f5", color: "rgba(0,0,0,.65)" }}>😘{res.data.msg}🐷</span>&nbsp;&nbsp;&nbsp;Bingo 🎉</span>,
+            })
+        }else {
+            message.success(res.data.msg);
+        }
+
     };
     onChange = function (e) {
         this.setState({
@@ -54,8 +68,8 @@ class Login extends Component {
                     name="basic"
                     initialValues={{
                         remember: true,
-                        username: 'admin',
-                        password: '123456',
+                        username: 'admin111',
+                        password: 'admin',
                     }}
                     onFinish={this.onFinish.bind(this)}
                 >

@@ -2,11 +2,11 @@ import {
     USER
 } from './Base'
 const init = {
-    isLogin: false,
     username: "",
     password: "",
     checked:true,
-    isFresh:false
+    isFresh:false,
+    token:null
 }
 const reducer = function (state = init, action = {}) {
 
