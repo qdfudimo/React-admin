@@ -1,6 +1,6 @@
 /*eslint-disable*/
 import React, { Component, Fragment } from 'react'
-import style from "./login.module.less"
+import "./login.less"
 import { Form, Input, Button, Checkbox, Modal,message } from 'antd';
 import { Link } from 'react-router-dom'
 import { connect } from "react-redux"
@@ -99,17 +99,17 @@ class Login extends Component {
                     >
                         <Input.Password />
                     </Form.Item>
-                    <div className={style.rember}>
-                        <Checkbox checked={this.state.checked} onChange={this.onChange.bind(this)}>记住密码</Checkbox><span className={style.forget}>忘记密码</span>
+                    <div className="rember">
+                        <Checkbox checked={this.state.checked} onChange={this.onChange.bind(this)}>记住密码</Checkbox><span className="forget">忘记密码</span>
                     </div>
-                    <div className={style.button}>
+                    <div className="button">
                         <Button type="primary" htmlType="submit">登录</Button>
                     </div>
-                    <div className={style.register}>
-                        现在去<Link to="/register" className={style.registers}>注册</Link>
-                        <span className="iconfont icon-weixin" className={style.icons}></span>
-                        <span className="iconfont icon-qq" className={style.icons}></span>
-                        <span className="iconfont icon-weixin1" className={style.icons} onClick={this.click.bind(this)}></span>
+                    <div className="register">
+                        现在去<Link to="/register" className="registers">注册</Link>
+                        <span className="iconfont icon-weixin icons" ></span>
+                        <span className="iconfont icon-qq icons" ></span>
+                        <span className="iconfont icon-weixin1 icons"  onClick={this.click.bind(this)}></span>
                     </div>
                 </Form>
                 <Modal
@@ -121,7 +121,7 @@ class Login extends Component {
                         </Button>
                     ]}
                 >
-                    <img src={imgurl} className={style.img} />
+                    <img src={imgurl} className="img" />
                 </Modal>
                 {/* <Button key="back" type="primary" onClick={this.handel}>
                     关闭
