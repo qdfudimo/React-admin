@@ -22,7 +22,8 @@ import {
     RedditOutlined,
     SplitCellsOutlined,
     ZoomInOutlined,
-    DribbbleOutlined
+    DribbbleOutlined,
+    FileImageOutlined
 } from '@ant-design/icons';
 const menuData = [
     {
@@ -40,6 +41,12 @@ const menuData = [
         title: '常用组件',
         icon: <AppstoreOutlined />,
         children: [
+            {
+                path: '/components/upload',
+                title: '图片上传',
+                cont: ['常用组件','图片上传'],
+                icon: <FileImageOutlined />
+            },
             {
                 path: '/components/editor',
                 title: '富文本编辑器',
