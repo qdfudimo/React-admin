@@ -1,0 +1,15 @@
+.img {
+  width: 400px;
+  height: 200px;
+  margin: 50px auto;
+  text-align: center;
+  line-height: 200px;
+}
+button {
+  display: block;
+  outline: none;
+  width: 60px;
+  height: 40px;
+  background-color: pink;
+  border: 0;
+}

@@ -17,6 +17,7 @@ export default class TimeTask extends Component {
                         </Timeline.Item>
                     <Timeline.Item dot={<ClockCircleOutlined style={{ fontSize: '16px' }} />}>
                         <p>等待开发</p>
+                        <p>登陆完成及验证码</p>
                         <p>后台接口开发用node</p>
                     </Timeline.Item>
                     <Timeline.Item color="red">暂无权限控制</Timeline.Item>
