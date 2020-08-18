@@ -1,10 +1,14 @@
 /*eslint-disable*/
-import React, { Fragment, useRef } from 'react'
+import React, { Fragment, useRef ,useEffect} from 'react'
 import { Card, Button, message } from 'antd';
+import { connect } from "react-redux"
 import style from "./upload.module.less"
-const componentName = () => {
+import { FolderOpenOutlined } from '@ant-design/icons';
+const componentName = (props) => {
     const img = useRef()
     const input = useRef()
+    useEffect(() => {
+    })
     const dragOver = (e) => {
         e.stopPropagation()
         e.preventDefault()
@@ -35,9 +39,15 @@ const componentName = () => {
         const file = new FileReader();
         file.readAsDataURL(rawFile)
         file.onload = (eve) => {
-            console.log(eve);
             img.current.src = eve.target.result
         }
+    }
+    const upload = (file) => {
+        const formData = new FormData();
+        // formData.append('name', JSON.stringify(json_data.name));
+        // formData.append('singer', JSON.stringify(json_data.singer));
+        // formData.append('sing_type', JSON.stringify(json_data.sing_type));
+        formData.append('file', file);
     }
     const handelClick = () => {
         input.current.click()
@@ -46,10 +56,16 @@ const componentName = () => {
         <Fragment>
             <Card size="small" title="图片上传">
                 <input type="file" ref={input} multiple hidden onChange={preview} />
-                <button onClick={handelClick}>上传</button>
+                <div className={style.upload} onClick={handelClick}><FolderOpenOutlined className={style.up} /></div>
                 <img ref={img} className={style.img}></img>
             </Card>
         </Fragment >
     )
 }
-export default componentName
+const mapStateToProps = (state) => {
+    return {
+        username: state.username,
+        token: state.token
+    }
+}
+export default connect(mapStateToProps, null)(componentName)
