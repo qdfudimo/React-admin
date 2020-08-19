@@ -43,7 +43,7 @@ const componentName = (props) => {
         file.onload = (eve) => {
             img.current.src = eve.target.result
         }
-        upload(file)
+        upload(rawFile)
     }
     const upload = (file) => {
         const form = new FormData();
@@ -55,7 +55,7 @@ const componentName = (props) => {
         form.append('token', json_data.token);
         form.append('file', file);
         let xhr = new XMLHttpRequest();   //创建对象
-        xhr.open('POST', 'http://localhost:4000/upload', true);
+        xhr.open('POST', '/api/upload', true);
         xhr.send(form)
         xhr.onreadystatechange = function () {
             console.log('state change', xhr);
@@ -83,11 +83,5 @@ const componentName = (props) => {
             </Card>
         </Fragment >
     )
-}
-const mapStateToProps = (state) => {
-    return {
-        username: state.username,
-        token: state.token
-    }
 }
 export default componentName
