@@ -1,12 +1,14 @@
 /*eslint-disable*/
-import React, { Fragment, useRef ,useEffect} from 'react'
+import React, { Fragment, useRef, useEffect } from 'react'
 import { Card, Button, message } from 'antd';
-import { connect } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import style from "./upload.module.less"
 import { FolderOpenOutlined } from '@ant-design/icons';
 const componentName = (props) => {
     const img = useRef()
     const input = useRef()
+    const username = useSelector(state => state.username)
+    const token = useSelector(state => state.token)
     useEffect(() => {
     })
     const dragOver = (e) => {
@@ -41,13 +43,33 @@ const componentName = (props) => {
         file.onload = (eve) => {
             img.current.src = eve.target.result
         }
+        upload(file)
     }
     const upload = (file) => {
-        const formData = new FormData();
-        // formData.append('name', JSON.stringify(json_data.name));
-        // formData.append('singer', JSON.stringify(json_data.singer));
-        // formData.append('sing_type', JSON.stringify(json_data.sing_type));
-        formData.append('file', file);
+        const form = new FormData();
+        let json_data = {
+            username,
+            token
+        }
+        form.append('name',json_data.username);
+        form.append('token', json_data.token);
+        form.append('file', file);
+        let xhr = new XMLHttpRequest();   //创建对象
+        xhr.open('POST', 'http://localhost:4000/upload', true);
+        xhr.send(form)
+        xhr.onreadystatechange = function () {
+            console.log('state change', xhr);
+            //调用 abort 后，state 立即变成了4,并不会变成0
+            //增加自定义属性  xhr.uploaded
+            if (xhr.readyState == 4) {
+                console.log(xhr,44444);
+                // var obj = JSON.parse(xhr.responseText);   //返回值
+                // console.log(obj);
+                // if(obj.fileUrl.length){
+                //     //alert('上传成功');
+                // }
+            }
+        }
     }
     const handelClick = () => {
         input.current.click()
@@ -68,4 +90,4 @@ const mapStateToProps = (state) => {
         token: state.token
     }
 }
-export default connect(mapStateToProps, null)(componentName)
+export default componentName
