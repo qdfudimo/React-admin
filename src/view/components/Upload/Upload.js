@@ -4,8 +4,10 @@ import { Card, Button, message } from 'antd';
 import { useDispatch, useSelector } from "react-redux"
 import style from "./upload.module.less"
 import { FolderOpenOutlined } from '@ant-design/icons';
+import config from "../../../utils/url"
 const componentName = (props) => {
     const img = useRef()
+    const imgs= useRef()
     const input = useRef()
     const username = useSelector(state => state.username)
     const token = useSelector(state => state.token)
@@ -62,12 +64,13 @@ const componentName = (props) => {
             //调用 abort 后，state 立即变成了4,并不会变成0
             //增加自定义属性  xhr.uploaded
             if (xhr.readyState == 4) {
-                console.log(xhr,44444);
-                // var obj = JSON.parse(xhr.responseText);   //返回值
-                // console.log(obj);
-                // if(obj.fileUrl.length){
-                //     //alert('上传成功');
-                // }
+                if(xhr.status ==200) {
+                    console.log(xhr,44444);
+                    var obj = JSON.parse(xhr.responseText);   //返回值
+                    if(obj.data.path){
+                        imgs.current.src = config.baseURL+obj.data.path
+                    } 
+                }
             }
         }
     }
@@ -80,6 +83,7 @@ const componentName = (props) => {
                 <input type="file" ref={input} multiple hidden onChange={preview} />
                 <div className={style.upload} onClick={handelClick}><FolderOpenOutlined className={style.up} /></div>
                 <img ref={img} className={style.img}></img>
+                <img ref={imgs} className={style.img}></img>
             </Card>
         </Fragment >
     )
