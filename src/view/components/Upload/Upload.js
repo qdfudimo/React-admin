@@ -7,7 +7,7 @@ import { FolderOpenOutlined } from '@ant-design/icons';
 import config from "../../../utils/url"
 const componentName = (props) => {
     const img = useRef()
-    const imgs= useRef()
+    const imgs = useRef()
     const input = useRef()
     const username = useSelector(state => state.username)
     const token = useSelector(state => state.token)
@@ -53,23 +53,28 @@ const componentName = (props) => {
             username,
             token
         }
-        form.append('name',json_data.username);
+        form.append('name', json_data.username);
         form.append('token', json_data.token);
         form.append('file', file);
         let xhr = new XMLHttpRequest();   //创建对象
+        xhr.upload.onprogress = function (evt) {
+            console.log(evt);
+            if(evt.total>0) {
+                console.log(evt.loaded);
+            }
+        }
         xhr.open('POST', '/api/upload', true);
         xhr.send(form)
         xhr.onreadystatechange = function () {
-            console.log('state change', xhr);
+            // console.log('state change', xhr);
             //调用 abort 后，state 立即变成了4,并不会变成0
             //增加自定义属性  xhr.uploaded
             if (xhr.readyState == 4) {
-                if(xhr.status ==200) {
-                    console.log(xhr,44444);
+                if (xhr.status == 200) {
                     var obj = JSON.parse(xhr.responseText);   //返回值
-                    if(obj.data.path){
-                        imgs.current.src = config.baseURL+obj.data.path
-                    } 
+                    if (obj.data.path) {
+                        imgs.current.src = config.baseURL + obj.data.path
+                    }
                 }
             }
         }
@@ -82,8 +87,16 @@ const componentName = (props) => {
             <Card size="small" title="图片上传">
                 <input type="file" ref={input} multiple hidden onChange={preview} />
                 <div className={style.upload} onClick={handelClick}><FolderOpenOutlined className={style.up} /></div>
-                <img ref={img} className={style.img}></img>
-                <img ref={imgs} className={style.img}></img>
+                <div className={style.img_list}>
+                    <div className={style.txt}>
+                        <div className={style.name}>图片上传即时预览</div>
+                        <img ref={img} className={style.img}></img>
+                    </div>
+                    <div className={style.txt}>
+                       <div className={style.name}>上传成功返回图片路径预览</div> 
+                        <img ref={imgs} className={style.img}></img>
+                    </div>
+                </div>
             </Card>
         </Fragment >
     )
