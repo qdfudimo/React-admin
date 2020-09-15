@@ -46,9 +46,11 @@ const componentName = (props) => {
     }
     const preview = (e) => {
         e.persist()
+        console.log(e);
         const files = e.target.files;
         const rawFile = files[0]
         const file = new FileReader();
+        if(!rawFile) return
         file.readAsDataURL(rawFile)
         file.onload = (eve) => {
             img.current.src = eve.target.result
@@ -104,7 +106,8 @@ const componentName = (props) => {
         setisDel(false)
     }
     const handelRemove = () => {
-        console.log(input.current);
+        input.current.value=null;
+        console.log(input.current.value);
     }
     return (
         <Fragment>
