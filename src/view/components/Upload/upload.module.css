@@ -32,3 +32,30 @@
 .txt {
   margin-right: 10px;
 }
+.total {
+  margin-top: 5px;
+  width: 100%;
+  display: flex;
+  cursor: pointer;
+  align-items: center;
+  height: 10px;
+  justify-content: space-between;
+}
+.process {
+  width: 95%;
+  height: 5px;
+  margin-right: 4px;
+  background-color: #ccc;
+  border-radius: 5px;
+  overflow: hidden;
+}
+.progressNumber {
+  display: block;
+  height: 5px;
+}
+.del {
+  display: none;
+}
+.active {
+  display: block;
+}

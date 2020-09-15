@@ -1,17 +1,25 @@
 /*eslint-disable*/
-import React, { Fragment, useRef, useEffect } from 'react'
+import React, { Fragment, useRef, useEffect, useState } from 'react'
 import { Card, Button, message } from 'antd';
 import { useDispatch, useSelector } from "react-redux"
 import style from "./upload.module.less"
-import { FolderOpenOutlined } from '@ant-design/icons';
+import { FolderOpenOutlined, CheckCircleTwoTone, CloseCircleTwoTone, DeleteTwoTone } from '@ant-design/icons';
 import config from "../../../utils/url"
 const componentName = (props) => {
     const img = useRef()
     const imgs = useRef()
     const input = useRef()
+    const process = useRef()
+    const processNumber = useRef()
     const username = useSelector(state => state.username)
     const token = useSelector(state => state.token)
+    const [isError, setisError] = useState(true)
+    const [isDel, setisDel] = useState(false)
+    const [isSeee, setisSeee] = useState(false)
+    const [uploadFile, setuploadFile] = useState([])
     useEffect(() => {
+        // process.current.style.width="20%";
+        // process.current.style.backgroundColor="red";
     })
     const dragOver = (e) => {
         e.stopPropagation()
@@ -59,28 +67,44 @@ const componentName = (props) => {
         let xhr = new XMLHttpRequest();   //创建对象
         xhr.upload.onprogress = function (evt) {
             console.log(evt);
-            if(evt.total>0) {
-                console.log(evt.loaded);
+            if (evt.total > 0) {
+                //evt.loaded上传进度条
+                let num = (evt.loaded / evt.total) * 100
+                if (num > 0) {
+                    process.current.style.opacity = 1;
+                    processNumber.current.style.backgroundColor = "#52c41a";
+                    processNumber.current.style.width = num + "%";
+                }
             }
         }
         xhr.open('POST', '/api/upload', true);
         xhr.send(form)
         xhr.onreadystatechange = function () {
-            // console.log('state change', xhr);
+            setisSeee(true)
             //调用 abort 后，state 立即变成了4,并不会变成0
             //增加自定义属性  xhr.uploaded
-            if (xhr.readyState == 4) {
-                if (xhr.status == 200) {
-                    var obj = JSON.parse(xhr.responseText);   //返回值
-                    if (obj.data.path) {
-                        imgs.current.src = config.baseURL + obj.data.path
-                    }
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                var obj = JSON.parse(xhr.responseText);   //返回值
+                if (obj.data.path) {
+                    imgs.current.src = config.baseURL + obj.data.path
                 }
+                setisError(true)
+            } else {
+                setisError(false)
             }
         }
     }
     const handelClick = () => {
         input.current.click()
+    }
+    const goDel = () => {
+        setisDel(true)
+    }
+    const goSucess = () => {
+        setisDel(false)
+    }
+    const handelRemove = () => {
+        console.log(input.current);
     }
     return (
         <Fragment>
@@ -93,8 +117,23 @@ const componentName = (props) => {
                         <img ref={img} className={style.img}></img>
                     </div>
                     <div className={style.txt}>
-                       <div className={style.name}>上传成功返回图片路径预览</div> 
+                        <div className={style.name}>上传成功返回图片路径预览</div>
                         <img ref={imgs} className={style.img}></img>
+                        <div className={style.total} onMouseMove={goDel} onMouseOut={goSucess}>
+                            <div ref={process} className={style.process}>
+                                <span ref={processNumber} className={style.progressNumber}></span>
+                            </div>
+                            {
+                                isDel ? "" : !isSeee ? "" : <span className={style.status}>
+                                    {
+                                        isError ? <CheckCircleTwoTone twoToneColor="#52c41a" /> : <CloseCircleTwoTone twoToneColor="#ff4d4f" />
+                                    }
+                                </span>
+                            }
+                            <span className={style["del"] + " " + style[isDel ? "active" : '']}>
+                                <DeleteTwoTone twoToneColor="#ff4d4f" onClick={handelRemove} />
+                            </span>
+                        </div>
                     </div>
                 </div>
             </Card>
