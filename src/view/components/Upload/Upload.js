@@ -15,12 +15,12 @@ const componentName = (props) => {
     const token = useSelector(state => state.token)
     const [isError, setisError] = useState(true)
     const [isDel, setisDel] = useState(false)
+    const [multiple, setMultiple] = useState(false)
     const [isSeee, setisSeee] = useState(false)
     const [uploadFile, setuploadFile] = useState([])
     useEffect(() => {
-        // process.current.style.width="20%";
-        // process.current.style.backgroundColor="red";
-    })
+        console.log(uploadFile);
+    }, [uploadFile])
     const dragOver = (e) => {
         e.stopPropagation()
         e.preventDefault()
@@ -44,18 +44,49 @@ const componentName = (props) => {
         e.stopPropagation()
         e.dataTransfer.dropEffect = 'copy'
     }
+    const uploadFiles = (files) => {
+        let postFiles = Array.prototype.slice.call(files);
+        if (!multiple) { postFiles = postFiles.slice(0, 1) }
+        if (postFiles.length === 0) { return; }
+        postFiles.forEach(item => {
+            handelStart(item)
+        });
+    }
+    const handelStart = (rawFile) => {
+        rawFile.uid = Date.now() + 1;
+        let file = {
+            // status: 'ready',
+            name: rawFile.name,
+            size: rawFile.size,
+            percentage: 0,
+            uid: rawFile.uid,
+            raw: rawFile
+        };
+        try {
+            file.url = URL.createObjectURL(rawFile);
+            console.log(file.url);
+          } catch (err) {
+            console.error('[Element Error][Upload]', err);
+            return;
+        }
+        setuploadFile([...uploadFile, file])
+    }
+
     const preview = (e) => {
         e.persist()
-        console.log(e);
         const files = e.target.files;
-        const rawFile = files[0]
-        const file = new FileReader();
-        if(!rawFile) return
-        file.readAsDataURL(rawFile)
-        file.onload = (eve) => {
-            img.current.src = eve.target.result
+        // uploadFiles(files)
+        if (!multiple) {
+            const rawFile = files[0]
+            if (!rawFile) return
+            const file = new FileReader();
+            file.readAsDataURL(rawFile)
+            file.onload = (eve) => {
+                console.log( eve.target.result);
+                img.current.src = eve.target.result
+            }
         }
-        upload(rawFile)
+        // upload(rawFile)
     }
     const upload = (file) => {
         const form = new FormData();
@@ -68,7 +99,6 @@ const componentName = (props) => {
         form.append('file', file);
         let xhr = new XMLHttpRequest();   //创建对象
         xhr.upload.onprogress = function (evt) {
-            console.log(evt);
             if (evt.total > 0) {
                 //evt.loaded上传进度条
                 let num = (evt.loaded / evt.total) * 100
@@ -91,7 +121,10 @@ const componentName = (props) => {
                     imgs.current.src = config.baseURL + obj.data.path
                 }
                 setisError(true)
+                input.current.value = null;
             } else {
+                input.current.value = null;
+                processNumber.current.style.backgroundColor = "#ff4d4f";
                 setisError(false)
             }
         }
@@ -106,13 +139,13 @@ const componentName = (props) => {
         setisDel(false)
     }
     const handelRemove = () => {
-        input.current.value=null;
-        console.log(input.current.value);
+        //为了能上传同一张图片
+        input.current.value = null;
     }
     return (
         <Fragment>
             <Card size="small" title="图片上传">
-                <input type="file" ref={input} multiple hidden onChange={preview} />
+                <input type="file" ref={input} multiple={false} hidden onChange={preview} />
                 <div className={style.upload} onClick={handelClick}><FolderOpenOutlined className={style.up} /></div>
                 <div className={style.img_list}>
                     <div className={style.txt}>
