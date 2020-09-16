@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux"
 import style from "./upload.module.less"
 import { FolderOpenOutlined, CheckCircleTwoTone, CloseCircleTwoTone, DeleteTwoTone } from '@ant-design/icons';
 import config from "../../../utils/url"
+import ajax from "./ajax"
 const componentName = (props) => {
     const img = useRef()
     const imgs = useRef()
@@ -15,47 +16,35 @@ const componentName = (props) => {
     const token = useSelector(state => state.token)
     const [isError, setisError] = useState(true)
     const [isDel, setisDel] = useState(false)
-    const [multiple, setMultiple] = useState(false)
+    const [multiple, setMultiple] = useState(true)
     const [isSeee, setisSeee] = useState(false)
     const [uploadFile, setuploadFile] = useState([])
     useEffect(() => {
-        console.log(uploadFile);
+        if (uploadFile.length > 0) {
+            console.log(uploadFile);
+            let files = getFile(uploadFile)
+            console.log(files);
+            if (files.length == 0) return
+            upload(files)
+        }
     }, [uploadFile])
-    const dragOver = (e) => {
-        e.stopPropagation()
-        e.preventDefault()
-        const files = e.dataTransfer.files
-        console.log(e);
-        if (files.length !== 1) {
-            message.error('仅支持上传一张图片')
-            return
-        }
-        const rawFile = files[0] // 文件信息
-        const file = new FileReader();
-        file.readAsDataURL(rawFile);
-        file.onload = e => {
-            img.current.src = e.target.result;
-        }
-        e.stopPropagation()
-        e.preventDefault()
-    }
-    const drop = (e) => {
-        e.preventDefault();
-        e.stopPropagation()
-        e.dataTransfer.dropEffect = 'copy'
-    }
     const uploadFiles = (files) => {
+        // if (limit && files.length + uploadFile.length > limit) {
+        //     //填写限制函数 逻辑
+        // }
         let postFiles = Array.prototype.slice.call(files);
         if (!multiple) { postFiles = postFiles.slice(0, 1) }
         if (postFiles.length === 0) { return; }
+        let fileArr = []
         postFiles.forEach(item => {
-            handelStart(item)
+            fileArr.push(handelStart(item))
         });
+        setuploadFile([...uploadFile, ...fileArr])
     }
     const handelStart = (rawFile) => {
         rawFile.uid = Date.now() + 1;
         let file = {
-            // status: 'ready',
+            status: 'ready',
             name: rawFile.name,
             size: rawFile.size,
             percentage: 0,
@@ -64,70 +53,63 @@ const componentName = (props) => {
         };
         try {
             file.url = URL.createObjectURL(rawFile);
-            console.log(file.url);
-          } catch (err) {
+        } catch (err) {
             console.error('[Element Error][Upload]', err);
             return;
         }
-        setuploadFile([...uploadFile, file])
+        return file
     }
-
+    const getFile = (rawFile) => {
+        return rawFile.filter(item => {
+            return item.status == "ready"
+        })
+    }
     const preview = (e) => {
         e.persist()
         const files = e.target.files;
-        // uploadFiles(files)
-        if (!multiple) {
-            const rawFile = files[0]
-            if (!rawFile) return
-            const file = new FileReader();
-            file.readAsDataURL(rawFile)
-            file.onload = (eve) => {
-                console.log( eve.target.result);
-                img.current.src = eve.target.result
-            }
-        }
-        // upload(rawFile)
+        if (!files) return
+        uploadFiles(files)
     }
     const upload = (file) => {
-        const form = new FormData();
         let json_data = {
             username,
             token
         }
-        form.append('name', json_data.username);
-        form.append('token', json_data.token);
-        form.append('file', file);
-        let xhr = new XMLHttpRequest();   //创建对象
-        xhr.upload.onprogress = function (evt) {
-            if (evt.total > 0) {
-                //evt.loaded上传进度条
-                let num = (evt.loaded / evt.total) * 100
-                if (num > 0) {
-                    process.current.style.opacity = 1;
-                    processNumber.current.style.backgroundColor = "#52c41a";
-                    processNumber.current.style.width = num + "%";
-                }
-            }
-        }
-        xhr.open('POST', '/api/upload', true);
-        xhr.send(form)
-        xhr.onreadystatechange = function () {
-            setisSeee(true)
-            //调用 abort 后，state 立即变成了4,并不会变成0
-            //增加自定义属性  xhr.uploaded
-            if (xhr.readyState == 4 && xhr.status == 200) {
-                var obj = JSON.parse(xhr.responseText);   //返回值
-                if (obj.data.path) {
-                    imgs.current.src = config.baseURL + obj.data.path
-                }
-                setisError(true)
+        let options = {
+            headers: {},
+            // withCredentials
+            file,
+            data: json_data,
+            // filename: "file",
+            action: '/api/upload',
+            onProgress: e => {
+                setisSeee(true)
+                process.current.style.opacity = 1;
+                processNumber.current.style.backgroundColor = "#52c41a";
+                processNumber.current.style.width = e.percent + "%";
+            },
+            onSuccess: e => {
                 input.current.value = null;
-            } else {
+                // imgs.current.src = config.baseURL + obj.data.path
+                // console.log(e);
+                changeStstus(uploadFile, "success")
+                setisError(true)
+            },
+            onError: e => {
+                changeStstus(uploadFile, "error")
                 input.current.value = null;
                 processNumber.current.style.backgroundColor = "#ff4d4f";
                 setisError(false)
             }
         }
+        ajax(options)
+    }
+    const changeStstus = (file, status) => {
+        let arr = [...file];
+        arr.forEach(item => {
+            item.status = status
+        })
+        setuploadFile([...arr])
     }
     const handelClick = () => {
         input.current.click()
@@ -145,7 +127,7 @@ const componentName = (props) => {
     return (
         <Fragment>
             <Card size="small" title="图片上传">
-                <input type="file" ref={input} multiple={false} hidden onChange={preview} />
+                <input type="file" ref={input} name="file" multiple={multiple} hidden onChange={preview} />
                 <div className={style.upload} onClick={handelClick}><FolderOpenOutlined className={style.up} /></div>
                 <div className={style.img_list}>
                     <div className={style.txt}>
