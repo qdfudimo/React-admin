@@ -52,9 +52,10 @@ export default function upload(option) {
             formData.append(key, option.data[key]);
         });
     }
-    option.file.forEach(item => {
-        formData.append('file', item.raw);
-    })
+    // option.file.forEach(item => {
+    //     formData.append('file', item.raw);
+    // })
+    formData.append('file', option.file.raw);
     xhr.onerror = function error(e) {
         option.onError(e);
     };

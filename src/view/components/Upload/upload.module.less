@@ -1,10 +1,7 @@
 .img {
-    width: 400px;
-    height: 200px;
-    text-align: center;
-    line-height: 200px;
+    width: 100%;
+    height: auto;
 }
-
 .upload {
     width: 400px;
     text-align: center;
@@ -20,21 +17,24 @@
 .up {
     font-size: 80px;
 }
-
 .img_list {
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: flex-start;
+    padding: 0 20px;
     padding-bottom: 40px;
 }
 
 .name {
-    padding: 25px 0;
-    text-align: center;
+    font-size: 18px;
+    padding: 10px 0;
     color: #000;
 }
 .txt {
+    overflow: hidden;
     margin-right: 10px;
+    max-width: 200px;
+    min-width: 140px;
 }
 .total {
     margin-top: 5px;
@@ -52,9 +52,9 @@
     background-color: #ccc;
     border-radius: 5px;
     overflow: hidden;
-    opacity: 0;
 }
 .progressNumber {
+    width: 0;
     display: block;
     height: 5px;
 }

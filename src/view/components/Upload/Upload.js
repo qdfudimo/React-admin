@@ -8,7 +8,6 @@ import config from "../../../utils/url"
 import ajax from "./ajax"
 const componentName = (props) => {
     const img = useRef()
-    const imgs = useRef()
     const input = useRef()
     const process = useRef()
     const processNumber = useRef()
@@ -21,11 +20,12 @@ const componentName = (props) => {
     const [uploadFile, setuploadFile] = useState([])
     useEffect(() => {
         if (uploadFile.length > 0) {
-            console.log(uploadFile);
             let files = getFile(uploadFile)
-            console.log(files);
             if (files.length == 0) return
-            upload(files)
+            files.forEach(item => {
+                console.log(item);
+                upload(item)
+            })
         }
     }, [uploadFile])
     const uploadFiles = (files) => {
@@ -80,34 +80,46 @@ const componentName = (props) => {
             // withCredentials
             file,
             data: json_data,
-            // filename: "file",
             action: '/api/upload',
             onProgress: e => {
-                setisSeee(true)
-                process.current.style.opacity = 1;
-                processNumber.current.style.backgroundColor = "#52c41a";
-                processNumber.current.style.width = e.percent + "%";
+                handleProgress(e, file)
+                // processNumber.current.style.backgroundColor = "#52c41a";
             },
             onSuccess: e => {
                 input.current.value = null;
                 // imgs.current.src = config.baseURL + obj.data.path
-                // console.log(e);
-                changeStstus(uploadFile, "success")
-                setisError(true)
+                handleSuccess(e, file)
             },
             onError: e => {
-                changeStstus(uploadFile, "error")
+                handleError(e, file)
                 input.current.value = null;
-                processNumber.current.style.backgroundColor = "#ff4d4f";
-                setisError(false)
+                // processNumber.current.style.backgroundColor = "#ff4d4f";
             }
         }
         ajax(options)
     }
-    const changeStstus = (file, status) => {
-        let arr = [...file];
+    const handleProgress = (e, file) => {
+        let arr = [...uploadFile];
         arr.forEach(item => {
-            item.status = status
+            if (item.uid == file.uid) {
+                item.status = "uploading"
+                item.percentage = e.percent
+            }
+        })
+        setuploadFile([...arr])
+    }
+    const handleSuccess = (e, file) => {
+        changeStatus(file, "success")
+    }
+    const handleError = (e, file) => {
+        changeStatus(file, "fail")
+    }
+    const changeStatus = (file, status) => {
+        let arr = [...uploadFile];
+        arr.forEach(item => {
+            if (item.uid == file.uid) {
+                item.status = status
+            }
         })
         setuploadFile([...arr])
     }
@@ -129,33 +141,61 @@ const componentName = (props) => {
             <Card size="small" title="图片上传">
                 <input type="file" ref={input} name="file" multiple={multiple} hidden onChange={preview} />
                 <div className={style.upload} onClick={handelClick}><FolderOpenOutlined className={style.up} /></div>
+                <div className={style.name}>图片上传即时预览</div>
                 <div className={style.img_list}>
-                    <div className={style.txt}>
-                        <div className={style.name}>图片上传即时预览</div>
-                        <img ref={img} className={style.img}></img>
-                    </div>
-                    <div className={style.txt}>
-                        <div className={style.name}>上传成功返回图片路径预览</div>
-                        <img ref={imgs} className={style.img}></img>
-                        <div className={style.total} onMouseMove={goDel} onMouseOut={goSucess}>
-                            <div ref={process} className={style.process}>
-                                <span ref={processNumber} className={style.progressNumber}></span>
-                            </div>
-                            {
-                                isDel ? "" : !isSeee ? "" : <span className={style.status}>
-                                    {
-                                        isError ? <CheckCircleTwoTone twoToneColor="#52c41a" /> : <CloseCircleTwoTone twoToneColor="#ff4d4f" />
-                                    }
+                    {/* h5即时预览
+                         <div className={style.txt}>
+                            <div className={style.name}>图片上传即时预览</div>
+                            <img ref={img} className={style.img}></img>
+                        </div> */}
+                    {/* {
+                        uploadFile.length > 0 ? uploadFile.map(item => <div key={item.uid} className={style.txt}>
+                            <img className={style.img} src={item.url}></img>
+                            <div className={style.total} onMouseMove={goDel(item)} onMouseOut={goSucess(item)}>
+                                <div ref={process} className={style.process}>
+                                    <span ref={processNumber} style={{ 'width':"20%"}} className={style.progressNumber}></span>
+                                </div>
+                                {
+                                    isDel ? "" : !isSeee ? "" : <span className={style.status}>
+                                        {
+                                            isError ? <CheckCircleTwoTone twoToneColor="#52c41a" /> : <CloseCircleTwoTone twoToneColor="#ff4d4f" />
+                                        }
+                                    </span>
+                                }
+                                <span className={style["del"] + " " + style[isDel ? "active" : '']}>
+                                    <DeleteTwoTone twoToneColor="#ff4d4f" onClick={handelRemove} />
                                 </span>
-                            }
-                            <span className={style["del"] + " " + style[isDel ? "active" : '']}>
-                                <DeleteTwoTone twoToneColor="#ff4d4f" onClick={handelRemove} />
-                            </span>
+                            </div>
                         </div>
-                    </div>
+                        ) : ""
+                    } */}
                 </div>
             </Card>
         </Fragment >
     )
 }
+// Scroll.defaultProps = {
+//     direction: "vertical",
+//     click: true,
+//     refresh: true,
+//     onScroll:null,
+//     pullUpLoading: false,
+//     pullDownLoading: false,
+//     pullUp: null,
+//     pullDown: null,
+//     bounceTop: true,
+//     bounceBottom: true
+//   };
+
+//   Scroll.propTypes = {
+//     direction: PropTypes.oneOf(['vertical', 'horizental']),
+//     refresh: PropTypes.bool,
+//     onScroll: PropTypes.func,
+//     pullUp: PropTypes.func,
+//     pullDown: PropTypes.func,
+//     pullUpLoading: PropTypes.bool,
+//     pullDownLoading: PropTypes.bool,
+//     bounceTop: PropTypes.bool,//是否支持向上吸顶
+//     bounceBottom: PropTypes.bool//是否支持向下吸顶
+//   };
 export default componentName
