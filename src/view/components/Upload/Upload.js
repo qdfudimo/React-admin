@@ -7,27 +7,33 @@ import { FolderOpenOutlined, CheckCircleTwoTone, CloseCircleTwoTone, DeleteTwoTo
 import config from "../../../utils/url"
 import ajax from "./ajax"
 const componentName = (props) => {
-    const img = useRef()
     const input = useRef()
-    const process = useRef()
-    const processNumber = useRef()
     const username = useSelector(state => state.username)
     const token = useSelector(state => state.token)
-    const [isError, setisError] = useState(true)
     const [isDel, setisDel] = useState(false)
     const [multiple, setMultiple] = useState(true)
-    const [isSeee, setisSeee] = useState(false)
     const [uploadFile, setuploadFile] = useState([])
+    const [activeLink, setactiveLink] = useState(null)
+    let index = 1;
     useEffect(() => {
         if (uploadFile.length > 0) {
-            let files = getFile(uploadFile)
-            if (files.length == 0) return
-            files.forEach(item => {
-                console.log(item);
+            getFile(uploadFile).forEach(item => {
                 upload(item)
             })
         }
     }, [uploadFile])
+    const getFile = (rawFile) => {
+        return rawFile.filter(item => {
+            console.log(item.status);
+            return item.status == "ready"
+        })
+    }
+    const preview = (e) => {
+        e.persist()
+        const files = e.target.files;
+        if (!files) return
+        uploadFiles(files)
+    }
     const uploadFiles = (files) => {
         // if (limit && files.length + uploadFile.length > limit) {
         //     //填写限制函数 逻辑
@@ -35,14 +41,14 @@ const componentName = (props) => {
         let postFiles = Array.prototype.slice.call(files);
         if (!multiple) { postFiles = postFiles.slice(0, 1) }
         if (postFiles.length === 0) { return; }
-        let fileArr = []
+        let arr = []
         postFiles.forEach(item => {
-            fileArr.push(handelStart(item))
+            arr.push(handelStart(item))
         });
-        setuploadFile([...uploadFile, ...fileArr])
+        setuploadFile([...uploadFile, ...arr])
     }
     const handelStart = (rawFile) => {
-        rawFile.uid = Date.now() + 1;
+        rawFile.uid = Date.now() + index++;
         let file = {
             status: 'ready',
             name: rawFile.name,
@@ -59,17 +65,6 @@ const componentName = (props) => {
         }
         return file
     }
-    const getFile = (rawFile) => {
-        return rawFile.filter(item => {
-            return item.status == "ready"
-        })
-    }
-    const preview = (e) => {
-        e.persist()
-        const files = e.target.files;
-        if (!files) return
-        uploadFiles(files)
-    }
     const upload = (file) => {
         let json_data = {
             username,
@@ -83,24 +78,24 @@ const componentName = (props) => {
             action: '/api/upload',
             onProgress: e => {
                 handleProgress(e, file)
-                // processNumber.current.style.backgroundColor = "#52c41a";
             },
             onSuccess: e => {
                 input.current.value = null;
-                // imgs.current.src = config.baseURL + obj.data.path
                 handleSuccess(e, file)
             },
             onError: e => {
-                handleError(e, file)
                 input.current.value = null;
-                // processNumber.current.style.backgroundColor = "#ff4d4f";
+                handleError(e, file)
             }
         }
         ajax(options)
     }
     const handleProgress = (e, file) => {
-        let arr = [...uploadFile];
+        let arr = [...uploadFile]
         arr.forEach(item => {
+            if(item.status == "ready") {
+                item.status = "loading"
+            }
             if (item.uid == file.uid) {
                 item.status = "uploading"
                 item.percentage = e.percent
@@ -115,7 +110,7 @@ const componentName = (props) => {
         changeStatus(file, "fail")
     }
     const changeStatus = (file, status) => {
-        let arr = [...uploadFile];
+        let arr = [...uploadFile]
         arr.forEach(item => {
             if (item.uid == file.uid) {
                 item.status = status
@@ -124,13 +119,19 @@ const componentName = (props) => {
         setuploadFile([...arr])
     }
     const handelClick = () => {
+        input.current.value = null;
         input.current.click()
     }
-    const goDel = () => {
-        setisDel(true)
+    const goDel = (val) => {
+        uploadFile.forEach(item => {
+            if (item.uid == val.uid) {
+               setactiveLink(item.uid)
+            }
+        })
     }
     const goSucess = () => {
-        setisDel(false)
+        // console.log(item); activeLink
+        setactiveLink(null)
     }
     const handelRemove = () => {
         //为了能上传同一张图片
@@ -143,32 +144,28 @@ const componentName = (props) => {
                 <div className={style.upload} onClick={handelClick}><FolderOpenOutlined className={style.up} /></div>
                 <div className={style.name}>图片上传即时预览</div>
                 <div className={style.img_list}>
-                    {/* h5即时预览
-                         <div className={style.txt}>
-                            <div className={style.name}>图片上传即时预览</div>
-                            <img ref={img} className={style.img}></img>
-                        </div> */}
-                    {/* {
-                        uploadFile.length > 0 ? uploadFile.map(item => <div key={item.uid} className={style.txt}>
-                            <img className={style.img} src={item.url}></img>
-                            <div className={style.total} onMouseMove={goDel(item)} onMouseOut={goSucess(item)}>
-                                <div ref={process} className={style.process}>
-                                    <span ref={processNumber} style={{ 'width':"20%"}} className={style.progressNumber}></span>
-                                </div>
-                                {
-                                    isDel ? "" : !isSeee ? "" : <span className={style.status}>
-                                        {
-                                            isError ? <CheckCircleTwoTone twoToneColor="#52c41a" /> : <CloseCircleTwoTone twoToneColor="#ff4d4f" />
-                                        }
+                    {
+                        uploadFile.length > 0 ? uploadFile.map((item,i )=> {
+                            return (<div key={item.uid} className={style.txt}>
+                                <img className={style.img} src={item.url}></img>
+                                <div className={style.total} onMouseMove={() => { goDel(item) }} onMouseOut={() => { goSucess(item) }}>
+                                    <div className={style.process}>
+                                        <span style={{ 'width': item.percentage + "%", "backgroundColor": item.percentage > 70 && item.status != "fail" ? "#52c41a" : "#ff4d4f" }} className={style.progressNumber}></span>
+                                    </div>
+                                    {
+                                        item.status == "uploading"||activeLink== item.uid ? "" : <span className={style.status}>
+                                            {
+                                                item.status == "success" ? <CheckCircleTwoTone twoToneColor="#52c41a" /> : <CloseCircleTwoTone twoToneColor="#ff4d4f" />
+                                            }
+                                        </span>
+                                    }
+                                    <span className={style["del"] + " " + style[activeLink== item.uid ? "active" : '']}>
+                                        <DeleteTwoTone twoToneColor="#ff4d4f" onClick={handelRemove} />
                                     </span>
-                                }
-                                <span className={style["del"] + " " + style[isDel ? "active" : '']}>
-                                    <DeleteTwoTone twoToneColor="#ff4d4f" onClick={handelRemove} />
-                                </span>
-                            </div>
-                        </div>
-                        ) : ""
-                    } */}
+                                </div>
+                            </div>)
+                        }) : ""
+                    }
                 </div>
             </Card>
         </Fragment >
