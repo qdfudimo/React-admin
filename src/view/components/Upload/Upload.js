@@ -1,17 +1,14 @@
 /*eslint-disable*/
 import React, { Fragment, useRef, useEffect, useState } from 'react'
-import { Card, Button, message } from 'antd';
-import { useDispatch, useSelector } from "react-redux"
+// import { Card, Button, message } from 'antd';
 import style from "./upload.module.less"
 import { FolderOpenOutlined, CheckCircleTwoTone, CloseCircleTwoTone, DeleteTwoTone } from '@ant-design/icons';
 import config from "../../../utils/url"
+import PropTypes from 'prop-types';
 import ajax from "./ajax"
 const componentName = (props) => {
+    let { multiple, data, headers, action, limit, onProgress, onSuccess, onError, onExceed } = props
     const input = useRef()
-    const username = useSelector(state => state.username)
-    const token = useSelector(state => state.token)
-    const [isDel, setisDel] = useState(false)
-    const [multiple, setMultiple] = useState(true)
     const [uploadFile, setuploadFile] = useState([])
     const [activeLink, setactiveLink] = useState(null)
     let index = 1;
@@ -24,7 +21,6 @@ const componentName = (props) => {
     }, [uploadFile])
     const getFile = (rawFile) => {
         return rawFile.filter(item => {
-            console.log(item.status);
             return item.status == "ready"
         })
     }
@@ -35,9 +31,10 @@ const componentName = (props) => {
         uploadFiles(files)
     }
     const uploadFiles = (files) => {
-        // if (limit && files.length + uploadFile.length > limit) {
-        //     //填写限制函数 逻辑
-        // }
+        if (limit && files.length + uploadFile.length > limit) {
+            //填写限制函数 逻辑
+            onExceed && onExceed(files, uploadFile)
+        }
         let postFiles = Array.prototype.slice.call(files);
         if (!multiple) { postFiles = postFiles.slice(0, 1) }
         if (postFiles.length === 0) { return; }
@@ -66,26 +63,25 @@ const componentName = (props) => {
         return file
     }
     const upload = (file) => {
-        let json_data = {
-            username,
-            token
-        }
         let options = {
-            headers: {},
+            headers,
             // withCredentials
             file,
-            data: json_data,
-            action: '/api/upload',
+            data: data,
+            action,
             onProgress: e => {
                 handleProgress(e, file)
+                onProgress(e, file,uploadFile)
             },
             onSuccess: e => {
                 input.current.value = null;
                 handleSuccess(e, file)
+                onSuccess(e, file,uploadFile)
             },
             onError: e => {
                 input.current.value = null;
                 handleError(e, file)
+                onError(e, file,uploadFile)
             }
         }
         ajax(options)
@@ -93,7 +89,7 @@ const componentName = (props) => {
     const handleProgress = (e, file) => {
         let arr = [...uploadFile]
         arr.forEach(item => {
-            if(item.status == "ready") {
+            if (item.status == "ready") {
                 item.status = "loading"
             }
             if (item.uid == file.uid) {
@@ -125,7 +121,7 @@ const componentName = (props) => {
     const goDel = (val) => {
         uploadFile.forEach(item => {
             if (item.uid == val.uid) {
-               setactiveLink(item.uid)
+                setactiveLink(item.uid)
             }
         })
     }
@@ -139,60 +135,60 @@ const componentName = (props) => {
     }
     return (
         <Fragment>
-            <Card size="small" title="图片上传">
-                <input type="file" ref={input} name="file" multiple={multiple} hidden onChange={preview} />
-                <div className={style.upload} onClick={handelClick}><FolderOpenOutlined className={style.up} /></div>
-                <div className={style.name}>图片上传即时预览</div>
-                <div className={style.img_list}>
-                    {
-                        uploadFile.length > 0 ? uploadFile.map((item,i )=> {
-                            return (<div key={item.uid} className={style.txt}>
-                                <img className={style.img} src={item.url}></img>
-                                <div className={style.total} onMouseMove={() => { goDel(item) }} onMouseOut={() => { goSucess(item) }}>
-                                    <div className={style.process}>
-                                        <span style={{ 'width': item.percentage + "%", "backgroundColor": item.percentage > 70 && item.status != "fail" ? "#52c41a" : "#ff4d4f" }} className={style.progressNumber}></span>
-                                    </div>
-                                    {
-                                        item.status == "uploading"||activeLink== item.uid ? "" : <span className={style.status}>
-                                            {
-                                                item.status == "success" ? <CheckCircleTwoTone twoToneColor="#52c41a" /> : <CloseCircleTwoTone twoToneColor="#ff4d4f" />
-                                            }
-                                        </span>
-                                    }
-                                    <span className={style["del"] + " " + style[activeLink== item.uid ? "active" : '']}>
-                                        <DeleteTwoTone twoToneColor="#ff4d4f" onClick={handelRemove} />
-                                    </span>
+            <input type="file" ref={input} name="file" multiple={multiple} hidden onChange={preview} />
+            <div className={style.upload} onClick={handelClick}><FolderOpenOutlined className={style.up} /></div>
+            <div className={style.name}>图片上传即时预览</div>
+            <div className={style.img_list}>
+                {
+                    uploadFile.length > 0 ? uploadFile.map((item, i) => {
+                        return (<div key={item.uid} className={style.txt}>
+                            <img className={style.img} src={item.url}></img>
+                            <div className={style.total} onMouseMove={() => { goDel(item) }} onMouseOut={() => { goSucess(item) }}>
+                                <div className={style.process}>
+                                    <span style={{ 'width': item.percentage + "%", "backgroundColor": item.percentage > 70 && item.status != "fail" ? "#52c41a" : "#ff4d4f" }} className={style.progressNumber}></span>
                                 </div>
-                            </div>)
-                        }) : ""
-                    }
-                </div>
-            </Card>
+                                {
+                                    item.status == "uploading" || activeLink == item.uid ? "" : <span className={style.status}>
+                                        {
+                                            item.status == "success" ? <CheckCircleTwoTone twoToneColor="#52c41a" /> : <CloseCircleTwoTone twoToneColor="#ff4d4f" />
+                                        }
+                                    </span>
+                                }
+                                <span className={style["del"] + " " + style[activeLink == item.uid ? "active" : '']}>
+                                    <DeleteTwoTone twoToneColor="#ff4d4f" onClick={handelRemove} />
+                                </span>
+                            </div>
+                        </div>)
+                    }) : ""
+                }
+            </div>
         </Fragment >
     )
 }
-// Scroll.defaultProps = {
-//     direction: "vertical",
-//     click: true,
-//     refresh: true,
-//     onScroll:null,
-//     pullUpLoading: false,
-//     pullDownLoading: false,
-//     pullUp: null,
-//     pullDown: null,
-//     bounceTop: true,
-//     bounceBottom: true
-//   };
+function noop() {
 
-//   Scroll.propTypes = {
-//     direction: PropTypes.oneOf(['vertical', 'horizental']),
-//     refresh: PropTypes.bool,
-//     onScroll: PropTypes.func,
-//     pullUp: PropTypes.func,
-//     pullDown: PropTypes.func,
-//     pullUpLoading: PropTypes.bool,
-//     pullDownLoading: PropTypes.bool,
-//     bounceTop: PropTypes.bool,//是否支持向上吸顶
-//     bounceBottom: PropTypes.bool//是否支持向下吸顶
-//   };
+}
+componentName.defaultProps = {
+    multiple: false,
+    data: {},
+    headers: {},
+    action: "",
+    limit: 1,
+    onProgress: noop,
+    onSuccess: noop,
+    onError: noop,
+    onExceed: noop,
+};
+
+componentName.propTypes = {
+    multiple: PropTypes.bool,
+    data: PropTypes.object,
+    headers: PropTypes.object,
+    limit: PropTypes.number,
+    action: PropTypes.string,
+    onProgress: PropTypes.func,
+    onError: PropTypes.func,
+    onSuccess: PropTypes.func,
+    onExceed: PropTypes.func,
+};
 export default componentName

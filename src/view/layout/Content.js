@@ -7,7 +7,7 @@ const { Content } = Layout;
 const Homes = lazy(() => import("../HomeIndex/HomeIndex"))
 const Icon = lazy(() => import("../Icon/Icon"))
 const Editor = lazy(() => import("../components/Editor/Editor"))
-const Upload = lazy(() => import("../components/Upload/Upload"))
+const Upload = lazy(() => import("../components/Upload/index"))
 const Markdown = lazy(() => import("../components/Markdown/Markdown"))
 const Digalog = lazy(() => import("../drop/Digalog/Digalog"))
 const DrgTable = lazy(() => import("../drop/DrgTable/DrgTable"))
