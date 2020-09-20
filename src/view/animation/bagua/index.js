@@ -4,7 +4,7 @@ import { Card } from 'antd';
 function Bagua() {
     return (
         <Fragment>
-            <Card size="small" title="太极图 阴阳鱼" style={{backgroundColor:"transparent"}}>
+            <Card title="太极图 阴阳鱼" style={{backgroundColor:"transparent"}}>
                 <div className={style.squre}></div>
             </Card>
         </Fragment>

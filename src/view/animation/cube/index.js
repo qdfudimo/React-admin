@@ -4,7 +4,7 @@ import { Card } from 'antd';
 function Cube() {
     return (
         <Fragment>
-            <Card size="small" title="纯css 正方形">
+            <Card title="纯css 正方形">
                 <div className={style.father}>
                     <div>第一面盒子</div>
                     <div>第二面盒子</div>

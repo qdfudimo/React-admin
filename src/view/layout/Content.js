@@ -7,6 +7,7 @@ const { Content } = Layout;
 const Homes = lazy(() => import("../HomeIndex/HomeIndex"))
 const Icon = lazy(() => import("../Icon/Icon"))
 const Editor = lazy(() => import("../components/Editor/Editor"))
+const Canvas = lazy(() => import("../components/Canvas/index"))
 const Upload = lazy(() => import("../components/Upload/index"))
 const Markdown = lazy(() => import("../components/Markdown/Markdown"))
 const Digalog = lazy(() => import("../drop/Digalog/Digalog"))
@@ -65,7 +66,8 @@ class Contents extends Component {
                 <Switch>
                     <Route path="/home" component={SuspenseComponent(Homes)} />
                     <Route path="/icon" component={SuspenseComponent(Icon)} />
-                    <Route path="/components" exact component={SuspenseComponent(Upload)} />
+                    <Route path="/components" exact component={SuspenseComponent(Canvas)} />
+                    <Route path="/components/canvas" component={SuspenseComponent(Canvas)} />
                     <Route path="/components/upload" component={SuspenseComponent(Upload)} />
                     <Route path="/components/editor" component={SuspenseComponent(Editor)} />
                     <Route path="/components/Markdown" component={SuspenseComponent(Markdown)} />

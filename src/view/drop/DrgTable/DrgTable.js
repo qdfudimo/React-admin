@@ -140,7 +140,7 @@ function DragTable() {
     }
     return (
         <Fragment>
-            <Card size="small" title="表格拖拽">
+            <Card title="表格拖拽">
                 <Table columns={columns} bordered pagination={false} dataSource={data} className="sortTable" />
                 <div style={{ paddingTop: "30px" }}>
                     <p>拖拽前排序：{oldList.map(i => i.key).join(",")}</p>

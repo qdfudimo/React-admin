@@ -2,9 +2,7 @@
 import React, { Fragment, useRef, useEffect, useState } from 'react'
 import { Card, Button, message } from 'antd';
 import { useDispatch, useSelector } from "react-redux"
-import Upload from "./Upload"
-const componentName = (props) => {
-    // let {multiple,data,headers,action,limit,onProgress,onSuccess,onError} = props
+const canvans = (props) => {
     const username = useSelector(state => state.username)
     const token = useSelector(state => state.token)
     let prop = {
@@ -19,9 +17,8 @@ const componentName = (props) => {
     return (
         <Fragment>
             <Card title="图片上传">
-                <Upload {...prop} />
             </Card>
         </Fragment >
     )
 }
-export default componentName
+export default canvans

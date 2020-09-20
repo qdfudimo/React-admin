@@ -23,6 +23,7 @@ import {
     SplitCellsOutlined,
     ZoomInOutlined,
     DribbbleOutlined,
+    BgColorsOutlined,
     FileImageOutlined
 } from '@ant-design/icons';
 const menuData = [
@@ -41,6 +42,12 @@ const menuData = [
         title: '常用组件',
         icon: <AppstoreOutlined />,
         children: [
+            {
+                path: '/components/canvas',
+                title: 'canvas',
+                cont: ['常用组件','canvas'],
+                icon: <BgColorsOutlined />
+            },
             {
                 path: '/components/upload',
                 title: '图片上传',

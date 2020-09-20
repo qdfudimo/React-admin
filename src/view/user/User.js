@@ -86,7 +86,7 @@ function User() {
 
     return (
         <Fragment>
-            <Card size="small" title="用户管理">
+            <Card title="用户管理">
                 <Table columns={columns}  bordered pagination={false} dataSource={data} />
             </Card>
         </Fragment>

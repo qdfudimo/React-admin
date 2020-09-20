@@ -4,7 +4,7 @@ import { Card } from 'antd';
 function Carousel() {
     return (
         <Fragment>
-            <Card size="small" title="纯css 旋转木马">
+            <Card title="纯css 旋转木马">
                 <div className={style.father}>
                     <section>
                         <div></div>
