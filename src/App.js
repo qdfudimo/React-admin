@@ -16,6 +16,7 @@ const SuspenseComponent = Component => props => {
     </Suspense>
   )
 }
+//ceshi
 class App extends Component {
   UNSAFE_componentWillMount() {
     if (!this.props.isFresh) {
